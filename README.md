@@ -1,20 +1,45 @@
 # Wheel_Assembly_Detection
 
-Automatic wheel assembly detection without the need for operator intervention. Using data from torque and force sensor and training a model using LTSM RNN, we will be able to atuomatically detect whether the wheel was correctly assembled.
-
-## Notes
-- src folder is only for scripts, not for the data itselfFinal
-
 ## TODO
-- Add data to data/raw
-- Add normalized and processed data to data/processed
-- Create model and put it into models
+* [ ] Add data to data/raw
+* [ ] Add normalized and processed data to data/processed
+* [ ] Create model and put it into models
+* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
+* [ ] Add a model file and a training script and get that running
+* [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+* [ ] Do a bit of code typing and remember to document essential parts of your code
+* [ ] Setup version control for your data or part of your data
+* [ ] Construct one or multiple docker files for your code
+* [ ] Build the docker files locally and make sure they work as intended
+* [ ] Write one or multiple configurations files for your experiments
+* [ ] Used Hydra to load the configurations and manage your hyperparameters
+* [ ] When you have something that works somewhat, remember at some point to to some profiling and see if
+      you can optimize your code
+* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
+      consider running a hyperparameter optimization sweep.
+* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
+## PROJECT DESCRIPTION
 
-## Makefile
-'make data'  # runs the make_dataset.py file, try it!
-'make clean'  # clean __pycache__ files
-'make requirements'  # install everything in the requirements.py file
+TL;DR: A project with no prior study that  to predict a successful assembly of tires on wheels without the need for operator intervention using data from torque and force sensor.
+
+### MOTIVATION
+The project is based on real case situated within the Testbed for Industry 4.0 at CTU Prague. The current quality control methodology uses CNNs for the visual inspection of tire assemblies.
+
+### DATA
+Data are meassured and labelled by the lab. The dataset is generated through robotic cell runs, every sample is then labeled as ‘true’ (successful assembly) or ‘false’ (unsuccessful assembly). We are using a “smaller” dataset (size limited due to self-labelling the data).
+
+### PROJECT GOAL
+This project aims to introduce a new method for enhancing the quality control process in car wheel assembly executed by a delta robot.
+
+### APPROACH
+Departing from the picture-based assessment using CNNs, our approach aims to evaluate the correctness of the assembly based on the data from a force-torque sensor. This transforms the dataset into a collection of time series, capturing recorded sensor data from individual tire assemblies. Each element from the series is a 6D vector combining a 3 DOF force vector and a 3 DOF torque vector.
+
+### METHODOLOGY
+The chosen methodology is an implementation of Long Short-Term Memory Recurrent Neural Networks (LSTM RNNs) using PyTorch since the data are in timeseries. There is no existing baseline solution for the current problem, so some part of the project time would be spent on experimenting with models.
+
+### FRAMEWORK
+As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
 ## Project structure
 
