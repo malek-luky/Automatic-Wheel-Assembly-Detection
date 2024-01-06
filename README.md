@@ -21,27 +21,27 @@
 
 ## PROJECT DESCRIPTION
 
-TL;DR: A project with no prior study that  to predict a successful assembly of tires on wheels without the need for operator intervention using data from torque and force sensor.
+A project with no prior study that  to predict a successful assembly of tires on wheels without the need for operator intervention using data from torque and force sensor.
 
-### MOTIVATION
+### Motivation
 The project is based on real case situated within the Testbed for Industry 4.0 at CTU Prague. The current quality control methodology uses CNNs for the visual inspection of tire assemblies.
 
-### DATA
+### Data
 Data are meassured and labelled by the lab. The dataset is generated through robotic cell runs, every sample is then labeled as ‘true’ (successful assembly) or ‘false’ (unsuccessful assembly). We are using a “smaller” dataset (size limited due to self-labelling the data).
 
-### PROJECT GOAL
+### Project Goal
 This project aims to introduce a new method for enhancing the quality control process in car wheel assembly executed by a delta robot.
 
-### APPROACH
+### Approach
 Departing from the picture-based assessment using CNNs, our approach aims to evaluate the correctness of the assembly based on the data from a force-torque sensor. This transforms the dataset into a collection of time series, capturing recorded sensor data from individual tire assemblies. Each element from the series is a 6D vector combining a 3 DOF force vector and a 3 DOF torque vector.
 
-### METHODOLOGY
+### Methodology
 The chosen methodology is an implementation of Long Short-Term Memory Recurrent Neural Networks (LSTM RNNs) using PyTorch since the data are in timeseries. There is no existing baseline solution for the current problem, so some part of the project time would be spent on experimenting with models.
 
-### FRAMEWORK
+### Framework
 As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
-## Project structure
+## PROJECT STRUCTURE
 
 The directory structure of the project looks like this:
 
@@ -98,5 +98,4 @@ The directory structure of the project looks like this:
 ```
 
 Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
-a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting
-started with Machine Learning Operations (MLOps).
+a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting started with Machine Learning Operations (MLOps).
