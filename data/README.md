@@ -19,6 +19,6 @@
 Describe the format of the data, including details about any coding or encoding schemes. For example, explain CSV file structure, what each column represents, etc.
 
 TODO:
-
+-   [ ] Explain how to use DVC to pull the data
 -   [ ] Explain why 0 is filtered out
 -   [ ] Explain the data and the robot
