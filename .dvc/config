@@ -1,0 +1,4 @@
+[core]
+    remote = remote_wheel_dataset
+['remote "remote_wheel_dataset"']
+    url = gs://wheel-assembly-detection-dataset
