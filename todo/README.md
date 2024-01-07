@@ -16,3 +16,10 @@
 * [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
       consider running a hyperparameter optimization sweep.
 * [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
+
+## WORKFLOW
+- 'git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git'
+- 'pip install -r requirements.txt'
+- 'dvc pull'
+- 'python stc/data/make_dataset.py'
+- 'python train_model.py'... (might be replaces by docker entrypoint?)
