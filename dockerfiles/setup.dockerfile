@@ -1,7 +1,6 @@
 # Base image
-# Base image
-FROM nvcr.io/nvidia/pytorch:23.07-py3 
-# without CUDA use python:3.11-slim
+FROM python:3.11-slim
+# with CUDA use nvcr.io/nvidia/pytorch:23.07-py3 
 
 # install python
 RUN apt update && \
@@ -18,5 +17,5 @@ COPY data/ data/
 WORKDIR /
 RUN pip install . --no-cache-dir #(1)
 
-# training script
-ENTRYPOINT ["python", "-u", "src/predict_model.py"]
+# training script - we will use script to run it instead
+# ENTRYPOINT ["python", "-u", "src/train_model.py"]
