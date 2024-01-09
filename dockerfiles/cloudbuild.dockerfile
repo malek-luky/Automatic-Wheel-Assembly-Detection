@@ -5,7 +5,7 @@ FROM continuumio/miniconda3
 WORKDIR /usr/src/app
 
 # Copy the environment.yml file to the container's working directory
-COPY environment.yml .
+COPY ../environment.yml .
 
 # Create the conda environment
 RUN conda env create -f environment.yml
@@ -14,17 +14,17 @@ RUN conda env create -f environment.yml
 SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 
 # Copy the necessary project files into the container
-COPY src ./src
-COPY pyproject.toml .
+COPY ../src ./src
+COPY ../pyproject.toml .
 # Copy the Git repository files
-COPY .git ./.git
+COPY ../.git ./.git
 
 # Install the local package
 RUN pip install -e .
 
 # Copy the DVC files
-COPY data.dvc .
-COPY .dvc ./.dvc
+COPY ../data.dvc .
+COPY ../.dvc ./.dvc
 
 # Run DVC pull to fetch the data
 RUN dvc pull
