@@ -17,9 +17,20 @@
       consider running a hyperparameter optimization sweep.
 * [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
-## WORKFLOW
+### COMMAND PROMPT
 - 'git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git'
+- docker build -f dockerfiles/Dockerfile . -t setup:latest (dont forget the dot)
+- docker run --name setup -v %cd%/models:/models/ setup:latest
+- docker run --name setup setup:latest
+
+### DOCKER
+- start docker?
+- conda create -n ml_ops python=3.10.9
+- conda activate ml_ops
+- python -m pip install --upgrade pip???
 - 'pip install -r requirements.txt'
 - 'dvc pull'
-- 'python stc/data/make_dataset.py'
+
+### MAKEFILE
+- 'python src/data/make_dataset.py'
 - 'python train_model.py'... (might be replaces by docker entrypoint?)
