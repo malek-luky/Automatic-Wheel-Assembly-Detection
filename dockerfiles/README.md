@@ -11,7 +11,10 @@ We can start as many docker files as we want as long as they have original names
 
 Never mix pip and conda, if you want to use only pip (does not cross check with the packages of correct version) dont use conda, if you want to use conda, put all dependencies into environment.yml file and activate the codna environment in the last step.
 
-Building docker using conda in repeat is 20000x faster (loading from cache does not work using only pip)
+Building docker using conda in repeat is 20000x faster (loading from cache does not work using only pip).
+
+UPDATE: After 7 hours I conclude that you have to be a masochist to use conda in docer. Dont to it.
+#wasted_hours_counter = 7
 
 ### Install the dependencies using pip
 WORKDIR /

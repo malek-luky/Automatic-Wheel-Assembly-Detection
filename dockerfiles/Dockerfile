@@ -1,25 +1,24 @@
 # Base image
-FROM continuumio/miniconda3
-WORKDIR /app
+FROM python:3.10.9-slim
 
-# Create a Conda environment with dependencies
-COPY environment.yml .
-RUN conda env create -f environment.yml
+# install python
+RUN apt update && \
+    apt install --no-install-recommends -y build-essential gcc && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
-# Make RUN commands use the new environment:
-SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
-
-# Copy other files
+# copy files
+WORKDIR /home/mlops
+COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/ src/
+COPY .dvc/ .dvc/
 COPY data.dvc data.dvc
-COPY /.dvc .
-COPY /.git .
+COPY .git/ .git/
 
-# Demonstrate the environment is activated:
-RUN echo "Make sure torch is installed:"
-RUN python -c "import torch"
-SHELL ["conda", "dvc pull", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
+# install dependencies
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+RUN pip install . --no-cache-dir
+RUN dvc pull
 
-# Run the application
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "DTU_ML_Ops", "python", "src/data/make_dataset.py"]
+# run
+# ENTRYPOINT ["python", "-u", "src/data/make_dataset.py"]

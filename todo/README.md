@@ -22,6 +22,7 @@
 - docker build -f dockerfiles/Dockerfile . -t setup:latest (dont forget the dot)
 - docker run --name setup -v %cd%/models:/models/ setup:latest
 - docker run --name setup setup:latest
+- docker run --name mlops -it --entrypoint sh setup:latest
 
 ### DOCKER
 - start docker?
