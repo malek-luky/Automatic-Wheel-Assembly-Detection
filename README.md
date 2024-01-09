@@ -22,6 +22,20 @@ The chosen methodology is an implementation of Long Short-Term Memory Recurrent 
 ### Framework
 As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
+## INSTALLATION
+Steps to build the repository in conda or docker
+
+### CONDA
+1) 'git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git'
+2) 'conda env create -f environment.yml'
+3) 'conda activate DTU_ML_Ops'
+4) 'dvc pull'
+
+### DOCKER
+1) 'git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git'
+2) 'docker build -f dockerfiles/Dockerfile . --build-arg DOCKER_BUILDKIT=1 -t mlops:latest'
+3) 'docker run --name mlops -it --entrypoint sh mlops:latest'
+
 ## PROJECT STRUCTURE
 
 The directory structure of the project looks like this:
