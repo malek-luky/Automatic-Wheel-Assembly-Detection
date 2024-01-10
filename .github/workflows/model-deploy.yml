@@ -1,0 +1,14 @@
+name: Build and Push Docker Conda Image of our entire project to GCP Artifact Registry
+
+on:
+    push:
+        branches:
+            - main
+# TODO: First, build the docker image and push it to GCP Artifact Registry, then deploy it to Cloud Run
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Echo
+              run: echo "HELLO"

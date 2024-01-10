@@ -2,7 +2,7 @@
 FROM continuumio/miniconda3
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the environment.yml file to the container's working directory
 COPY environment.yml .
@@ -16,7 +16,6 @@ SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 # Copy the necessary project files into the container
 COPY src ./src
 COPY pyproject.toml .
-# Copy the Git repository files
 COPY .git ./.git
 
 # Install the local package
@@ -29,8 +28,5 @@ COPY .dvc ./.dvc
 # Run DVC pull to fetch the data
 RUN dvc pull
 
-# Add environment activation command to .bashrc (so when container starts, the environment is activated)
-RUN echo "source activate DTU_ML_Ops" >> ~/.bashrc
-
-# The command to run when the container starts
-#CMD ["/bin/bash"]
+# Set the command to run the train_model.py script
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/train_model.py"]
