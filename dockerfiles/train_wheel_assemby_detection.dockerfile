@@ -16,7 +16,6 @@ SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 # Copy the necessary project files into the container
 COPY src ./src
 COPY pyproject.toml .
-# Copy the Git repository files
 COPY .git ./.git
 
 # Install the local package
@@ -29,10 +28,5 @@ COPY .dvc ./.dvc
 # Run DVC pull to fetch the data
 RUN dvc pull
 
-# Add environment activation command to .bashrc (so when container starts, the environment is activated)
-RUN echo "source activate DTU_ML_Ops" >> ~/.bashrc
-
-# The command to run when the container starts
-# Keeps the container running, you can then run docker exec -it <container_id> /bin/bash to get a bash shell inside the container
-CMD tail -f /dev/null 
-
+# Set the command to run the train_model.py script
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/train_model.py"]
