@@ -1,7 +1,7 @@
-name: Build and Push Docker Conda Image of our entire project to GCP Artifact Registry
+name: Build and Push Docker Training Image to GCP Artifact Registry
 
 env:
-    IMAGE_NAME: conda_wheel_assembly_detection
+    IMAGE_NAME: train_wheel_assembly_detection
 
 on:
     push:
