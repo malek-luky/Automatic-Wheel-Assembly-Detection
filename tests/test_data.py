@@ -12,14 +12,16 @@ def test_folder_contents():
     folder_path = _PATH_DATA+"/processed"
     assert len(os.listdir(folder_path)) > 90, "There are not enough items in the folder, did dvc pull run correctly?"
 
+    # Check if there are more than 90 items in the folder
+    folder_path = _PATH_DATA+"/raw"
+    assert len(os.listdir(folder_path)) > 10, "The original meassurements are missing, maybe try to run dvc pull?"
+
     # Load one of the items
-    item_path = os.path.join(folder_path, "data_id_1_label_True.pt")
+    item_path = os.path.join(_PATH_DATA, "processed/data_id_1_label_True.pt")
     item = torch.load(item_path)
 
     # Check if it is a torch file
     assert isinstance(item, torch.Tensor), "The item is not a torch file"
 
     # Check its dimensions
-    assert item.dim() == 2, "The item does not have the expected dimensions"
-
-    print(item)
+    assert item.size()[1] == 7, "The item does not have the expected dimensions, should include seven columns, but it does not match"
