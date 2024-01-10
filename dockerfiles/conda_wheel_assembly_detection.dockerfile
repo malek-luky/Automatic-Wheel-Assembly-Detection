@@ -2,7 +2,7 @@
 FROM continuumio/miniconda3
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the environment.yml file to the container's working directory
 COPY environment.yml .
@@ -33,4 +33,4 @@ RUN dvc pull
 RUN echo "source activate DTU_ML_Ops" >> ~/.bashrc
 
 # The command to run when the container starts
-#CMD ["/bin/bash"]
+CMD ["/bin/bash"]
