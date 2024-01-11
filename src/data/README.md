@@ -9,7 +9,7 @@
                 ex. $ python3 filter.py <path_to_src_dir> <path_to_output_dir> 
 - `normalize.py`: A script for data normalization.
                   Loads filtered CSV files and saves the normalized data in CSV files
-                  in separate folder
+                  in separate folder. Also changes "Time" values to integer series starting from 0. Adds 'LABEL' column to each CSV
                   ex. $ python3 normalize.py <path_to_src_dir> <path_to_labels> <path_to_output_dir> 
 - `process.py`: A script that loads normalized data files and saves them as torch tensors
                 in separate folder.
@@ -25,6 +25,8 @@
                   File names in format 'data_id_<num>_label_<True/False>.csv
 - `/processed`: Contains pytorch tensor files derived from normalized data files.
                 File names in format 'data_id_<num>_label_<True/False>.csv
+                Also contains a CSV file that comprises all CSVs from /normalized 
+                folder
 
 
 

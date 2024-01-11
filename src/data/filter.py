@@ -29,6 +29,7 @@ columns_to_preserve = [
     "\"HMI_User\".FT_Data.Torque_X",
     "\"HMI_User\".FT_Data.Torque_Y",
     "\"HMI_User\".FT_Data.Torque_Z",
+    "#Identifier"
 ]
 
 
