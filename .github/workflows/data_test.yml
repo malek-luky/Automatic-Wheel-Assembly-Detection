@@ -37,4 +37,4 @@ jobs:
           pytest
 
       - name: Run pytest with coverage
-              uses: lpenz/ghaction-pytest-cov@v1
+        uses: lpenz/ghaction-pytest-cov@v1
