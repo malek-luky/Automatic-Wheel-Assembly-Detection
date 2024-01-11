@@ -1,4 +1,5 @@
 """This is inital version of the training code for the project."""
+import os
 from pathlib import Path
 import pickle
 import torch
@@ -22,7 +23,8 @@ from pandas.errors import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 # Load data
-data = pd.read_csv("src/full_dataset.csv") # read data example
+file_path = os.path.abspath("src/full_dataset.csv")
+data = pd.read_csv(file_path)
 data["time_idx"] = data["Time"]
 
 # Define training parameters
