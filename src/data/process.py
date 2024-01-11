@@ -20,8 +20,12 @@ __email__   = "bestavra@fel.cvut.cz"
 __date__    = "2024/01/10" 
 
 
-def save_CSVs_as_tensors(src_folder: str, out_folder: str, run_in_git: bool = True) -> None:
-    """Save CSV files as PyTorch tensors.
+def save_CSVs_as_tensors_and_concatenate(
+        src_folder: str, 
+        out_folder: str, 
+        concat_file_name: str,
+        run_in_git: bool = True) -> None:
+    """Save CSV files as PyTorch tensors and concatenate them into a single CSV.
     
     Parameters
     ----------
@@ -29,6 +33,8 @@ def save_CSVs_as_tensors(src_folder: str, out_folder: str, run_in_git: bool = Tr
         The path to the folder containing the CSV files.
     out_folder : str
         The path to the folder to store the PyTorch tensors.
+    concat_file_name : str
+        The name of the concatenated CSV file.
     run_in_git : bool, optional
         Set to True if the script is run in the git repository, by default True
     """
@@ -42,6 +48,9 @@ def save_CSVs_as_tensors(src_folder: str, out_folder: str, run_in_git: bool = Tr
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
 
+    # Initialize an empty DataFrame for concatenation
+    concatenated_df = pd.DataFrame()
+
     # Iterate over all CSV files in the source folder
     for file_name in os.listdir(src_folder):
         if file_name.endswith('.csv'):
@@ -51,6 +60,9 @@ def save_CSVs_as_tensors(src_folder: str, out_folder: str, run_in_git: bool = Tr
             # Load the CSV file into a DataFrame
             df = pd.read_csv(file_path)
 
+            # Append the DataFrame to the concatenated DataFrame
+            concatenated_df = pd.concat([concatenated_df, df], ignore_index=True)
+
             # Convert the DataFrame into a PyTorch Tensor
             tensor = torch.tensor(df.values)
 
@@ -58,6 +70,9 @@ def save_CSVs_as_tensors(src_folder: str, out_folder: str, run_in_git: bool = Tr
             # The tensor file will have the same name as the CSV but with a .pt extension
             tensor_file_name = file_name.replace('.csv', '.pt')
             torch.save(tensor, os.path.join(out_folder, tensor_file_name))
+
+    # Save the concatenated DataFrame as a CSV file
+    concatenated_df.to_csv(os.path.join(out_folder, concat_file_name), index=False)
 
 
 def main() -> None:
@@ -73,7 +88,12 @@ def main() -> None:
     args = parser.parse_args()
 
     # Process the CSV files
-    _ = save_CSVs_as_tensors(args.normalized_data_path, args.processed_data_path)
+    concatenated_csv_file_name = 'dataset_concatenated.csv'
+    _ = save_CSVs_as_tensors_and_concatenate(
+            args.normalized_data_path, 
+            args.processed_data_path,
+            concatenated_csv_file_name
+        )
 
 if __name__ == '__main__':
     main()

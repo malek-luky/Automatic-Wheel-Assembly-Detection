@@ -52,9 +52,11 @@ def main() -> None:
     )
 
     # Save normalized CSV files as torch tensors
-    process.save_CSVs_as_tensors(
-        args.normalized_data_path, 
+    concatenated_csv_file_name = 'dataset_concatenated.csv'
+    process.save_CSVs_as_tensors_and_concatenate(
+        args.normalized_data_path,
         args.processed_data_path,
+        concatenated_csv_file_name, 
         run_in_git=run_in_git
     )
 
