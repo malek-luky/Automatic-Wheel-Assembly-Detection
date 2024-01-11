@@ -127,8 +127,8 @@ trainer.fit(
 )
 
 # make a prediction on entire validation set
-preds, index = tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
-# preds= tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
+# preds, index = tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
+preds= tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
 
 
 # Optimize hyperparameters
