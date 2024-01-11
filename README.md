@@ -27,20 +27,22 @@ Steps to build the repository in conda or docker
 
 ### CONDA
 1) `git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git`
-2) cd Automatic-Wheel-Assembly-Detection
+2) `cd Automatic-Wheel-Assembly-Detection`
 3) `conda env create -f environment.yml`
 4) `conda activate DTU_ML_Ops`
 5) `dvc pull`
+6) `python src/data/make_dataset.py`
+7) `python src/models/train_model.py`
 
 ### DOCKER PIP
 1) `git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git`
-2) cd Automatic-Wheel-Assembly-Detection
+2) `cd Automatic-Wheel-Assembly-Detection`
 3) `docker build -f dockerfiles/Dockerfile . --build-arg DOCKER_BUILDKIT=1 -t mlops:latest`
 4) `docker run --name mlops -it --entrypoint sh mlops:latest`
 
 ### DOCKER CONDA
 1) `git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git`
-2) cd Automatic-Wheel-Assembly-Detection
+2) `cd Automatic-Wheel-Assembly-Detection`
 3) `docker build -f dockerfiles/conda.dockerfile . --build-arg DOCKER_BUILDKIT=1 -t mlops:latest`
 4) `docker run --name mlops -it --entrypoint sh mlops:latest`
 
