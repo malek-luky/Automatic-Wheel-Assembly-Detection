@@ -4,7 +4,7 @@ from __future__ import annotations
 import pandas as pd
 import argparse
 import os
-
+import git
 
 """filter_data.py: Filter raw .csv files and preserve specific columns."""
 
@@ -51,7 +51,8 @@ def process_csv_file(file_path: str, output_dir: str) -> None:
         df_subset = filtered_df[filtered_df['#Identifier'] == identifier]
         df_subset = df_subset[columns_to_preserve]
         base_file_name = os.path.splitext(os.path.basename(file_path))[0]
-        output_file_path = f'./{output_dir}/{base_file_name}_id_{identifier}.csv'
+        output_file_path = f'{output_dir}/{base_file_name}_id_{identifier}.csv'
+        print(output_file_path)
         df_subset.to_csv(output_file_path, index=False)
 
 
@@ -65,10 +66,25 @@ def process_all_csv_files(folder_path: str, output_dir: str) -> None:
     output_dir : str
         The path to the directory to store the processed CSV files.
     """
+    git_root = find_git_root_folder()
+    folder_path = os.path.join(git_root, folder_path)
+    output_dir = os.path.join(git_root, output_dir)
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.csv'):
             file_path = os.path.join(folder_path, file_name)
             process_csv_file(file_path, output_dir)
+
+
+def find_git_root_folder():
+    """
+    Finds the root folder of the git repository to automatically set the paths to the data folders.
+    """
+    try:
+        repo = git.Repo(search_parent_directories=True)
+        git_root = repo.git.rev_parse("--show-toplevel")
+        return git_root
+    except git.InvalidGitRepositoryError:
+        return None
 
 
 def main() -> None:
@@ -77,8 +93,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Process some CSV files.")
 
     # Add the arguments
-    parser.add_argument('raw_data_path', type=str, help='The path to the raw data')
-    parser.add_argument('processed_data_path', type=str, help='The path to store the processed data')
+    parser.add_argument('raw_data_path', type=str, nargs='?', default='data/raw', help='The path to the raw data')
+    parser.add_argument('processed_data_path', type=str, nargs='?', default='data/filtered', help='The path to store the processed data')
 
     # Parse the arguments
     args = parser.parse_args()
