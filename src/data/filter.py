@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import pandas as pd
-import argparse
 import os
+import argparse
+
+import pandas as pd
+
+# Local imports
+from utils import find_git_root_folder
 
 
-"""filter_data.py: Filter raw .csv files and preserve specific columns."""
+"""filter.py: Filter raw .csv files and preserve specific columns."""
 
-__author__ = "Vratislav Besta"
-__group__ = ""
-__version__ = "1.0.0"
-__email__ = "bestavra@fel.cvut.cz"
-__date__ = "2024/01/05"
+__author__  = "Vratislav Besta"
+__group__   = "50"
+__version__ = "1.0.1"
+__email__   = "bestavra@fel.cvut.cz"
+__date__    = "2024/01/10" 
 
 
 # Define the columns to be preserved
@@ -55,7 +59,7 @@ def process_csv_file(file_path: str, output_dir: str) -> None:
         df_subset.to_csv(output_file_path, index=False)
 
 
-def process_all_csv_files(folder_path: str, output_dir: str) -> None:
+def process_all_csv_files(folder_path: str, output_dir: str, run_in_git: bool = True) -> None:
     """Process all CSV files in a folder.
 
     Parameters
@@ -64,7 +68,15 @@ def process_all_csv_files(folder_path: str, output_dir: str) -> None:
         The path to the folder containing the CSV files to process.
     output_dir : str
         The path to the directory to store the processed CSV files.
+    run_in_git : bool, optional
+        Whether to run the script in a git repository, by default True
     """
+    # If running in git, set path relative to the root of the repository
+    if run_in_git:
+        git_root = find_git_root_folder()
+        folder_path = os.path.join(git_root, folder_path)
+        output_dir = os.path.join(git_root, output_dir)
+
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.csv'):
             file_path = os.path.join(folder_path, file_name)
@@ -74,7 +86,7 @@ def process_all_csv_files(folder_path: str, output_dir: str) -> None:
 def main() -> None:
     """The main function."""
     # Create the parser
-    parser = argparse.ArgumentParser(description="Process some CSV files.")
+    parser = argparse.ArgumentParser(description="Filter raw CSV files.")
 
     # Add the arguments
     parser.add_argument('raw_data_path', type=str, help='The path to the raw data')
