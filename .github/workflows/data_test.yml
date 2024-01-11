@@ -38,3 +38,6 @@ jobs:
 
       - name: Run pytest with coverage
         uses: lpenz/ghaction-pytest-cov@v1
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2
