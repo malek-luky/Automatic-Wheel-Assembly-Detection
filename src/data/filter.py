@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import pandas as pd
-import argparse
 import os
 import git
+import argparse
+import pandas as pd
 
-"""filter_data.py: Filter raw .csv files and preserve specific columns."""
+# Local imports
+from utils import find_git_root_folder
 
-__author__ = "Vratislav Besta"
-__group__ = ""
-__version__ = "1.0.0"
-__email__ = "bestavra@fel.cvut.cz"
-__date__ = "2024/01/05"
+
+"""filter.py: Filter raw .csv files and preserve specific columns."""
+
+__author__  = "Vratislav Besta"
+__group__   = "50"
+__version__ = "1.0.1"
+__email__   = "bestavra@fel.cvut.cz"
+__date__    = "2024/01/10" 
 
 
 # Define the columns to be preserved
@@ -52,11 +56,10 @@ def process_csv_file(file_path: str, output_dir: str) -> None:
         df_subset = df_subset[columns_to_preserve]
         base_file_name = os.path.splitext(os.path.basename(file_path))[0]
         output_file_path = f'{output_dir}/{base_file_name}_id_{identifier}.csv'
-        print(output_file_path)
         df_subset.to_csv(output_file_path, index=False)
 
 
-def process_all_csv_files(folder_path: str, output_dir: str) -> None:
+def process_all_csv_files(folder_path: str, output_dir: str, run_in_git: bool = True) -> None:
     """Process all CSV files in a folder.
 
     Parameters
@@ -65,10 +68,15 @@ def process_all_csv_files(folder_path: str, output_dir: str) -> None:
         The path to the folder containing the CSV files to process.
     output_dir : str
         The path to the directory to store the processed CSV files.
+    run_in_git : bool, optional
+        Whether to run the script in a git repository, by default True
     """
-    git_root = find_git_root_folder()
-    folder_path = os.path.join(git_root, folder_path)
-    output_dir = os.path.join(git_root, output_dir)
+    # If running in git, set path relative to the root of the repository
+    if run_in_git:
+        git_root = find_git_root_folder()
+        folder_path = os.path.join(git_root, folder_path)
+        output_dir = os.path.join(git_root, output_dir)
+
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.csv'):
             file_path = os.path.join(folder_path, file_name)
@@ -90,17 +98,17 @@ def find_git_root_folder():
 def main() -> None:
     """The main function."""
     # Create the parser
-    parser = argparse.ArgumentParser(description="Process some CSV files.")
+    parser = argparse.ArgumentParser(description="Filter raw CSV files.")
 
     # Add the arguments
     parser.add_argument('raw_data_path', type=str, nargs='?', default='data/raw', help='The path to the raw data')
-    parser.add_argument('processed_data_path', type=str, nargs='?', default='data/filtered', help='The path to store the processed data')
+    parser.add_argument('filtered_data_path', type=str, nargs='?', default='data/filtered', help='The path to store the filtered data')
 
     # Parse the arguments
     args = parser.parse_args()
 
     # Process the CSV files
-    process_all_csv_files(args.raw_data_path, args.processed_data_path)
+    process_all_csv_files(args.raw_data_path, args.filtered_data_path)
 
 
 if __name__ == '__main__':
