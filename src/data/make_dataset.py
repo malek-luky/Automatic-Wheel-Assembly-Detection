@@ -28,7 +28,7 @@ def main() -> None:
     parser.add_argument('filtered_data_path', type=str, nargs='?', default='data/filtered', help='The path to store the filtered data')
     parser.add_argument('normalized_data_path', type=str, nargs='?', default='data/normalized', help='The path to store the normalized data')
     parser.add_argument('labels_data_path', type=str, nargs='?', default='data/FT_dataset_labels.csv', help='The path to the labels data')
-    parser.add_argument('processed_data_path', type=str, nargs='?', default='data/processed', help='The path to store the processed data')
+    parser.add_argument('processed_data_path', type=str, nargs='?', default='/data/processed', help='The path to store the processed data')
 
     # Parse the arguments
     args = parser.parse_args()
