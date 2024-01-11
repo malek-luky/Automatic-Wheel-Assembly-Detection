@@ -117,7 +117,7 @@ res = Tuner(trainer).lr_find(
 )
 print(f"suggested learning rate: {res.suggestion()}")
 fig = res.plot(show=True, suggest=True)
-fig.show()
+# fig.show()
 tft.hparams.learning_rate = res.suggestion()
 
 trainer.fit(
