@@ -23,7 +23,7 @@ from pandas.errors import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 # Load data
-file_path = os.path.abspath("src/full_dataset.csv")
+file_path = os.path.abspath("data/processed/dataset_concatenated.csv")
 data = pd.read_csv(file_path)
 data["time_idx"] = data["Time"]
 
