@@ -71,6 +71,17 @@ def save_CSVs_as_tensors_and_concatenate(
             tensor_file_name = file_name.replace('.csv', '.pt')
             torch.save(tensor, os.path.join(out_folder, tensor_file_name))
 
+    # Rename columns inside df
+    concatenated_df.rename(columns={
+        '"DeltaPicker".TcpInWcs.z.Position': "TcpInWcs_z_Position",
+        '"HMI_User".FT_Data.Force_X': "FT_Data_Force_X",
+        '"HMI_User".FT_Data.Force_Y': "FT_Data_Force_Y",
+        '"HMI_User".FT_Data.Force_Z': "FT_Data_Force_Z",
+        '"HMI_User".FT_Data.Torque_X': "FT_Data_Torque_X",
+        '"HMI_User".FT_Data.Torque_Y': "FT_Data_Torque_Y",
+        '"HMI_User".FT_Data.Torque_Z': "FT_Data_Torque_Z"
+    }, inplace=True)
+
     # Save the concatenated DataFrame as a CSV file
     concatenated_df.to_csv(os.path.join(out_folder, concat_file_name), index=False)
 
