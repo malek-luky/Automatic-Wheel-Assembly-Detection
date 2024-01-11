@@ -1,8 +1,12 @@
 # Data
-
 data/
-
 docs/site/
+
+# Garbage from training
+*.lr*
+tb_logs/*
+training.pkl
+validation.pkl
 
 # test cache
 manual_test/
