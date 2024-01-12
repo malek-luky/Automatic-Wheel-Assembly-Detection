@@ -13,20 +13,20 @@ from utils import find_git_root_folder
 
 """process.py: Load normalized data from .csv files and save them to separate folder as .pt files."""
 
-__author__  = "Vratislav Besta"
-__group__   = "50"
+__author__ = "Vratislav Besta"
+__group__ = "50"
 __version__ = "1.0.0"
-__email__   = "bestavra@fel.cvut.cz"
-__date__    = "2024/01/10" 
+__email__ = "bestavra@fel.cvut.cz"
+__date__ = "2024/01/10"
 
 
 def save_CSVs_as_tensors_and_concatenate(
-        src_folder: str, 
-        out_folder: str, 
+        src_folder: str,
+        out_folder: str,
         concat_file_name: str,
         run_in_git: bool = True) -> None:
     """Save CSV files as PyTorch tensors and concatenate them into a single CSV.
-    
+
     Parameters
     ----------
     src_folder : str
@@ -92,8 +92,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Process some CSV files.")
 
     # Add the arguments
-    parser.add_argument('normalized_data_path', type=str, nargs='?', default='data/normalized', help='The path to the normalized data')
-    parser.add_argument('processed_data_path', type=str, nargs='?', default='data/processed', help='The path to store the processed data')
+    parser.add_argument('normalized_data_path', type=str, nargs='?',
+                        default='data/normalized', help='The path to the normalized data')
+    parser.add_argument(
+        'processed_data_path', type=str, nargs='?', default='data/processed',
+        help='The path to store the processed data')
 
     # Parse the arguments
     args = parser.parse_args()
@@ -101,10 +104,11 @@ def main() -> None:
     # Process the CSV files
     concatenated_csv_file_name = 'dataset_concatenated.csv'
     _ = save_CSVs_as_tensors_and_concatenate(
-            args.normalized_data_path, 
-            args.processed_data_path,
-            concatenated_csv_file_name
-        )
+        args.normalized_data_path,
+        args.processed_data_path,
+        concatenated_csv_file_name
+    )
+
 
 if __name__ == '__main__':
     main()
