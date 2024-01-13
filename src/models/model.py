@@ -30,6 +30,8 @@ class TireAssemblyLSTM(pl.LightningModule):
         y_pred = self(x)
         loss = nn.BCEWithLogitsLoss()(y_pred, y.unsqueeze(1))
 
+        # y_pred are logits, so we need to convert them to probabilities
+        y_pred = torch.sigmoid(y_pred)
         accuracy = (y == (y_pred > 0.5)).float().mean()
 
         self.log('train_loss', loss)
@@ -41,6 +43,7 @@ class TireAssemblyLSTM(pl.LightningModule):
         y_pred = self(x)
         loss = nn.BCEWithLogitsLoss()(y_pred, y.unsqueeze(1))
 
+        y_pred = torch.sigmoid(y_pred)
         accuracy = (y == (y_pred > 0.5)).float().mean()
 
         self.log('test_loss', loss)
