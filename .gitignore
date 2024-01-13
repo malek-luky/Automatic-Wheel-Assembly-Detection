@@ -2,6 +2,9 @@
 data/
 docs/site/
 
+wandb/
+lightning_logs/
+
 # Garbage from training
 *.lr*
 tb_logs/*
