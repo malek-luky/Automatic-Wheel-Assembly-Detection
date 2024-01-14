@@ -114,7 +114,7 @@ Another option is to create the instance
 
 ### Connecting to VM machine
 
-- Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection-
+- Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
 - Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
 
 ### Troublshooting
@@ -123,19 +123,18 @@ If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.
 
 ## 👀 Optional
 
-**Re-process the data from `data/raw`. It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
-
+### Re-process the data
+It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
 ```
 python src/data/make_dataset.py
 ```
 
-**Re-train the model**
+### Re-train the model
 ```
 python src/models/train_model.py
 ```
 
-**Remove the conda environment**
-
+### Remove the conda environment
 ```
 conda remove --name DTU_ML_Ops --all
 ```
