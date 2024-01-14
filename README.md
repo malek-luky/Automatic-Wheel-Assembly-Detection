@@ -95,19 +95,23 @@ make docker_<conda/train/deplot>_online
 7) Machine Type: `c2d-standard-4` (must have at least 16GB RAM)
 8) Boot disk: `20 GB`
 9) Container image: `<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY>` (click Deploy Container)
-10) Restart polict: `never`
+10) Restart policy: `never`
 11) The rest is default
 
 You can use the following command as well:
 ```
 gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20
 ```
+<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> example:
+```
+europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_wheel_assembly_detection:30bfff9d67e13b398188608b94c44662bca1fb06
+```
 
 ### Running Docker inside VM
 
 To run the dockerm you can follow the Build and Run #1 steps above (`gcloud` command is not installed in VM) or you can start the instance with specified docker container following "Create VM Machne"
 
-Another option is to create the instance
+Another option is to create the instance using image in Artifact Registry
 1) Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_wheel_assembly_detection?project=wheel-assembly-detection)
 2) Click the three dots and click `Deploy in GCE`
 3) Create new instance using the "Create VM Machine" steps
@@ -116,6 +120,13 @@ Another option is to create the instance
 
 - Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
 - Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
+
+### How to check if the Docker is deployed in VM?
+- ssh into the VM
+- `docker ps`: shows the docker files running on the machine
+- `docker logs <CONATINER_ID>` wait until its successfully pulled
+- `docker ps`: pulled container has new ID
+- `docker exec -it CONTAINER-ID /bin/bash`: starts the docker in interactive window (only the conda_wheel_assemly_detection, the rest only train the model, upload the model and exits, maybe setting the restart policy to "never" should fix this issue)
 
 ### Troublshooting
 

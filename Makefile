@@ -39,16 +39,16 @@ conda:
 
 ## Docker
 docker_conda:
-	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t DTU_ML_Ops:latest
-	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
+	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t conda_wheel:latest
+	docker run --name conda_wheel -it --entrypoint /bin/bash conda_wheel:latest
 
 docker_train:
-	docker build -f dockerfiles/train_wheel_assembly_detection.dockerfile . -t DTU_ML_Ops:latest
-	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
+	docker build -f dockerfiles/train_wheel_assembly_detection.dockerfile . -t trainer:latest
+	docker run --name trainer -it --entrypoint /bin/bash trainer:latest
 
 docker_deploy:
-	docker build -f dockerfiles/deploy_model.dockerfile . -t DTU_ML_Ops:latest
-	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
+	docker build -f dockerfiles/deploy_model.dockerfile . -t deploy:latest
+	docker run --name model-deploy -it --entrypoint /bin/bash deploy:latest
 
 ## Docker Online
 docker_conda_online:
@@ -61,12 +61,15 @@ docker_train_online:
 
 docker_deploy_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
-	
-	
+
+## Create VM Machine
+virtual_machine:
+	gcloud compute instances create-with-container instance_makefile --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20
+	gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"
 
 ## Process raw data into processed data
 data:
-dvc pull
+	dvc pull
 	python $(PROJECT_NAME)/data/make_dataset.py
 
 #################################################################################
