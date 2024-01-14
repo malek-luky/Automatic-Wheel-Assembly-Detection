@@ -50,29 +50,24 @@ Due to the small dataset limited by the time constraints and the amount of label
 
 As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
 Steps to build the repository in conda or docker
 
-**Clone the repository**
-```
+## 🐍 Conda
 
-```
-
-### 🐍 Conda
-
-**Create the environment, install the dependencies and download the data**
+### Create the environment, install the dependencies and download the data
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
 make conda
 ```
 
-### 🐳 Docker
+## 🐳 Docker
 
 This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
 
-**Build and Run #1**
+### Build and Run #1
 Build the container locally after downloading the repository.
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
@@ -80,20 +75,22 @@ cd Automatic-Wheel-Assembly-Detection
 make docker_<conda/train/deploy>
 ```
 
-**Build and Run #2**
+### Build and Run #2
+
 Pulls the docker image from GCP Artifact Registry, no need to clone the repo.
 ```
 make docker_<conda/train/deplot>_online
 ```
 
-### Google Cloud Computing
+## 💻 Google Cloud Computing
 
-**Create VM Machine**
-1) Open (Compute Engine)[https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection]
+### Create VM Machine
+
+1) Open [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
 2) Create a name
 3) Region: `europe-west1 (Belgium)`
 4) Zone: `europe-west1-b`
-5) Machine configuration: `Compute-optimized)
+5) Machine configuration: `Compute-optimized`
 6) Series: `C2D`
 7) Machine Type: `c2d-standard-4` (must have at least 16GB RAM)
 8) Boot disk: `20 GB`
@@ -106,24 +103,28 @@ You can use the following command as well:
 gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20
 ```
 
-**Running Docker inside VM**
+### Running Docker inside VM
+
 To run the dockerm you can follow the Build and Run #1 steps above (`gcloud` command is not installed in VM) or you can start the instance with specified docker container following "Create VM Machne"
 
 Another option is to create the instance
-1) Open the image you want to deplot in (GCP)[https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_wheel_assembly_detection?project=wheel-assembly-detection]
+1) Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_wheel_assembly_detection?project=wheel-assembly-detection)
 2) Click the three dots and click `Deploy in GCE`
 3) Create new instance using the "Create VM Machine" steps
 
-**Connecting to VM machine**
-- Can be via SSH inside the browser (Compute Engine)[https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection]
+### Connecting to VM machine
+
+- Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection-
 - Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
 
-**Troublshooting**
+### Troublshooting
+
 If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install)
 
-### 👀 Optional
+## 👀 Optional
 
 **Re-process the data from `data/raw`. It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
+
 ```
 python src/data/make_dataset.py
 ```
@@ -153,11 +154,11 @@ The model is deployed using Google Cloud Run. You can make a prediction using th
 curl -X POST https://INSERT-OUR-URL/predict -H "Content-Type: application/json" -d '{"data": [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]}'
 ```
 
-## 🤝 Contributing
+# 🤝 Contributing
 
 Contributions are always welcome! If you have any ideas or suggestions for the project, please create an issue or submit a pull request. Please follow these [conventions](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) for commit messages.
 
-## 💻 Technology Used
+# 💻 Technology Used
 - Docker: "PC Setup" inside the docker file
 - Conda: Package manager
 - GCP
@@ -174,9 +175,9 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 - Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
 - Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 
-## 📂 PROJECT STRUCTURE
+# 📂 PROJECT STRUCTURE
 The directory structure of the project looks like this:
-
+```
 ├── .dvc/                 <- Cache and config for data version control
 ├── .github/workflows     <- Includes the steps for GitHub Actions
 │   └── build_conda       <- Conda dockerfile: Build conda image and push it to GCP
@@ -227,8 +228,9 @@ The directory structure of the project looks like this:
 ├── pyproject.toml        <- Project (python) configuration file
 ├── README.md             <- The top-level README which you are reading right now
 ├── requirements.txt      <- The pip requirements file for reproducing the environment
+```
 
-## 🙏 Acknowledgements
+# 🙏 Acknowledgements
 
 Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
 a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting started with Machine Learning Operations (MLOps).
