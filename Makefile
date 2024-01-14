@@ -43,8 +43,26 @@ docker_conda:
 	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
 
 docker_train:
+	docker build -f dockerfiles/train_wheel_assembly_detection.dockerfile . -t DTU_ML_Ops:latest
+	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
 
-docker_train:
+docker_deploy:
+	docker build -f dockerfiles/deploy_model.dockerfile . -t DTU_ML_Ops:latest
+	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
+
+## Docker Online
+docker_conda_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_wheel_assembly_detection:30bfff9d67e13b398188608b94c44662bca1fb06
+
+docker_train_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_wheel_assembly_detection:f7e8c513ee0310e6bb26b7b81c8d015fd889f89a
+
+docker_deploy_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	
+	
 
 ## Process raw data into processed data
 data:

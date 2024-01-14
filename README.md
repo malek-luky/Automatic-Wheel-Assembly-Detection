@@ -56,14 +56,15 @@ Steps to build the repository in conda or docker
 
 **Clone the repository**
 ```
-git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
-cd Automatic-Wheel-Assembly-Detection
+
 ```
 
 ### 🐍 Conda
 
-**Clone the repository, create the environment, install the dependencies and download the data**
+**Create the environment, install the dependencies and download the data**
 ```
+git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
+cd Automatic-Wheel-Assembly-Detection
 make conda
 ```
 
@@ -71,10 +72,38 @@ make conda
 
 This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
 
-**Build the image and run the container**
+**Local build**
 ```
-make docker
+git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
+cd Automatic-Wheel-Assembly-Detection
+make docker_<conda/train/deploy>
 ```
+
+**Online build**
+Pulls the docker image from GCP Artifact Registry, no need to clone the repo
+```
+make docker_<conda/train/deplot>_online
+```
+
+### Google Cloud Computing
+
+**Create VM Machine**
+1) Open (Compute Engine)[https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection]
+2) Create a name
+3) Region: `europe-west1 (Belgium)`
+4) Zone: `europe-west1-b`
+5) Machine configuration: `Compute-optimized)
+6) Series: `C2D`
+7) Machine Type: `c2d-standard-4` (must have at least 16GB RAM)
+8) Boot disk: `20 GB`
+9) The rest is default
+
+**Connecting to VM machine**
+- Can be via SSH inside the browser (Compute Engine)[https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection]
+- Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "lukas-test" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
+
+**Troublshooting**
+If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install)
 
 ### 👀 Optional
 
