@@ -1,0 +1,33 @@
+name: DTU_ML_Ops_Cuda
+channels:
+    - conda-forge
+    - pytorch
+    - nvidia
+    - defaults
+dependencies:
+    - python=3.10
+    - pip
+    - dvc
+    - pytorch 
+    - torchvision 
+    - torchaudio 
+    - pytorch-cuda=12.1
+    - pip:
+          - setuptools==69.0.3
+          - dvc-gs==3.0.1
+          - optuna==3.4
+          - torch_tb_profiler==0.4.3
+          - torchdata==0.6.1
+          - torchtext==0.15.2
+          - pytorch_lightning==2.0.2
+          - pytorch_forecasting==1.0.0
+          - rich==13.7.0
+          - pytest==7.4.4
+          - wandb==0.16.1
+          - numpy==1.26.3
+          - matplotlib==3.8.2
+          - pandas==2.1.4
+          - pyarrow==14.0.2
+          - fastparquet==2023.10.1
+          - coverage==7.4.0
+          - soundfile==0.12.1
