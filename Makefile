@@ -38,18 +38,18 @@ conda:
 	dvc pull
 
 ## Docker
-docker:
+docker_conda:
 	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t DTU_ML_Ops:latest
+	docker run --name DTU_ML_Ops -v %cd%/models:/models/ -it --entrypoint /bin/bash DTU_ML_Ops:latest
 
+docker_train:
 
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
+docker_train:
 
 ## Process raw data into processed data
 data:
+dvc pull
 	python $(PROJECT_NAME)/data/make_dataset.py
-	docker run --name DTU_ML_Ops -it --entrypoint /bin/bash DTU_ML_Ops:latest
 
 #################################################################################
 # Documentation RULES                                                           #

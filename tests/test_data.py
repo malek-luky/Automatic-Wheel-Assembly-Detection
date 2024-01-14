@@ -30,4 +30,4 @@ def test_folder_contents():
     assert isinstance(item, torch.Tensor), "The item is not a torch file"
 
     # Check its dimensions
-    assert item.size()[1] == 7, "The item does not have the expected dimensions, should include seven columns, but it does not match"
+    assert item.size()[1] == 10, "The item does not have the expected dimensions, should include seven columns, but it does not match"

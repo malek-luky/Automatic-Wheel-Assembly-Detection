@@ -134,6 +134,11 @@ The directory structure of the project looks like this:
 
 ├── .dvc/                 <- Cache and config for data version control
 ├── .github/workflows     <- Includes the steps for GitHub Actions
+│   └── build_conda       <- Conda dockerfile: Build conda image and push it to GCP
+│   ├── build_deploy      <- Deploy dockerfile: build, push and deploy
+│   └── build_train       <- Train dockerfile: Build train image and push it to GCP
+│   └── pytest_data       <- Runs the data pytests
+│   ├── pytest_model      <- Runs the model pytests
 ├── data                  <- Run dvc pull to see this folder
 │   └── filtered          <- Seperated raw data, one file is one meassurement
 │   └── normalized        <- Normalized filtered data 
@@ -142,7 +147,7 @@ The directory structure of the project looks like this:
 ├── dockerfiles           <- Storage of out dockerfiles
 │   └── conda_wheel       <- Setups the machine and open interactive environement
 │   ├── train_wheel       <- Runs train_model.py that upload the new model to wandb
-│   └── serve_model       <- Serves the model using FastAPId the new model to wandb
+│   └── serve_model       <- Uses FastAPI, as the only dockerfile also deploys the model
 │   └── README            <- Notes and few commands regarding the dockerfiles struggle
 ├── docs                  <- Documentation folder
 │   ├── index.md          <- Homepage for your documentation
