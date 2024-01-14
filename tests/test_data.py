@@ -2,6 +2,10 @@ import os
 import torch
 import pytest
 
+_TEST_ROOT = os.path.dirname(__file__)  # root of test folder
+_PROJECT_ROOT = os.path.dirname(_TEST_ROOT)  # root of project
+_PATH_DATA = os.path.join(_PROJECT_ROOT, "data")  # root of data
+
 # Get the absolute path to the data directory
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 
@@ -26,4 +30,4 @@ def test_folder_contents():
     assert isinstance(item, torch.Tensor), "The item is not a torch file"
 
     # Check its dimensions
-    assert item.size()[1] == 7, "The item does not have the expected dimensions, should include seven columns, but it does not match"
+    assert item.size()[1] == 10, "The item does not have the expected dimensions, should include seven columns, but it does not match"

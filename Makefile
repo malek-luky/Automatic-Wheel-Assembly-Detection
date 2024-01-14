@@ -4,8 +4,8 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = Wheel_Assembly_Detection
-PYTHON_VERSION = 3.11
+PROJECT_NAME = DTU_ML_Ops
+PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
 #################################################################################
@@ -31,13 +31,45 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+ ## Create Conda environment
+conda:
+	conda env create -f environment.yml
+	conda activate DTU_ML_Ops
+	dvc pull
 
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
+## Docker
+docker_conda:
+	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t conda_wheel:latest
+	docker run --name conda_wheel -it --entrypoint /bin/bash conda_wheel:latest
+
+docker_train:
+	docker build -f dockerfiles/train_wheel_assembly_detection.dockerfile . -t trainer:latest
+	docker run --name trainer -it --entrypoint /bin/bash trainer:latest
+
+docker_deploy:
+	docker build -f dockerfiles/deploy_model.dockerfile . -t deploy:latest
+	docker run --name model-deploy -it --entrypoint /bin/bash deploy:latest
+
+## Docker Online
+docker_conda_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_wheel_assembly_detection:30bfff9d67e13b398188608b94c44662bca1fb06
+
+docker_train_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_wheel_assembly_detection:f7e8c513ee0310e6bb26b7b81c8d015fd889f89a
+
+docker_deploy_online:
+	gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+## Create VM Machine
+virtual_machine:
+	gcloud compute instances create-with-container instance_makefile --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20
+	gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"
 
 ## Process raw data into processed data
 data:
+	dvc pull
 	python $(PROJECT_NAME)/data/make_dataset.py
 
 #################################################################################
