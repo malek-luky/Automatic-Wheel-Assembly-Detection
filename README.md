@@ -50,7 +50,7 @@ Due to the small dataset limited by the time constraints and the amount of label
 
 As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
 Steps to build the repository in conda or docker
 
@@ -164,11 +164,11 @@ The model is deployed using Google Cloud Run. You can make a prediction using th
 curl -X POST https://INSERT-OUR-URL/predict -H "Content-Type: application/json" -d '{"data": [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]}'
 ```
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions are always welcome! If you have any ideas or suggestions for the project, please create an issue or submit a pull request. Please follow these [conventions](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) for commit messages.
 
-# 💻 Technology Used
+## 💻 Technology Used
 - Docker: "PC Setup" inside the docker file
 - Conda: Package manager
 - GCP
@@ -185,7 +185,7 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 - Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
 - Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 
-# 📂 PROJECT STRUCTURE
+## 📂 PROJECT STRUCTURE
 The directory structure of the project looks like this:
 ```
 ├── .dvc/                 <- Cache and config for data version control
@@ -240,7 +240,7 @@ The directory structure of the project looks like this:
 ├── requirements.txt      <- The pip requirements file for reproducing the environment
 ```
 
-# 🙏 Acknowledgements
+## 🙏 Acknowledgements
 
 Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
 a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting started with Machine Learning Operations (MLOps).
