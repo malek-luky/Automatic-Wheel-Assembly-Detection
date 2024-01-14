@@ -4,8 +4,8 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = Wheel_Assembly_Detection
-PYTHON_VERSION = 3.11
+PROJECT_NAME = DTU_ML_Ops
+PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
 #################################################################################
@@ -31,6 +31,16 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+ ## Create Conda environment
+conda:
+	conda env create -f environment.yml
+	conda activate DTU_ML_Ops
+	dvc pull
+
+## Docker
+docker:
+	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t DTU_ML_Ops:latest
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
@@ -39,6 +49,7 @@ clean:
 ## Process raw data into processed data
 data:
 	python $(PROJECT_NAME)/data/make_dataset.py
+	docker run --name DTU_ML_Ops -it --entrypoint /bin/bash DTU_ML_Ops:latest
 
 #################################################################################
 # Documentation RULES                                                           #

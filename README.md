@@ -54,66 +54,44 @@ As a third-party framework we are going to use PyTorch Lightning and maybe with 
 
 Steps to build the repository in conda or docker
 
-### 🐍 Conda
-
 **Clone the repository**
-
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
-
 cd Automatic-Wheel-Assembly-Detection
 ```
 
-**Create the environment and install the dependencies**
+### 🐍 Conda
 
+**Clone the repository, create the environment, install the dependencies and download the data**
 ```
-conda env create -f environment.yml
-
-conda activate DTU_ML_Ops
-```
-
-**Download the data**
-
-This will download the data from a GCP bucket using DVC and place it in `data` folder.
-
-```
-dvc pull
-```
-
-**(Optional): Re-process the data from `data/raw`. It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
-
-```
-python src/data/make_dataset.py
-```
-
-**(Optional): Re-train the model**
-
-```
-python src/models/train_model.py
+make conda
 ```
 
 ### 🐳 Docker
 
 This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
 
-**Clone the repository**
-
+**Build the image and run the container**
 ```
-git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
-
-cd Automatic-Wheel-Assembly-Detection
+make docker
 ```
 
-**Build the image**
+### 👀 Optional
+
+**Re-process the data from `data/raw`. It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
+```
+python src/data/make_dataset.py
+```
+
+**Re-train the model**
+```
+python src/models/train_model.py
+```
+
+**Remove the conda environment**
 
 ```
-docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t wheel:latest
-```
-
-**Run the container**
-
-```
-docker run --name wheel_container -it --entrypoint /bin/bash wheel:latest
+conda remove --name DTU_ML_Ops --all
 ```
 
 ## 🌐 Deployment
@@ -133,6 +111,72 @@ curl -X POST https://INSERT-OUR-URL/predict -H "Content-Type: application/json" 
 ## 🤝 Contributing
 
 Contributions are always welcome! If you have any ideas or suggestions for the project, please create an issue or submit a pull request. Please follow these [conventions](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) for commit messages.
+
+## 💻 Technology Used
+- Docker: "PC Setup" inside the docker file
+- Conda: Package manager
+- GCP
+	- Cloud Storage: Stores data for dvc pull
+	- Artifact Registry: Stores built docker images (can be created into container)
+	- Compute Engine: Enables creating virtual machines
+	- Vertex AI: includes virtual machines, but its made for training AI models ("abstraction above abstraction...")
+- CookieCutter: Template used for generating code sctructure
+- DVC: Data versioning tool, similar is github but for data
+- GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP 
+- Pytest: Runs some tests to check whether the code is working
+- CodeCov: Tool for uploading coverage report from pytest as a comment to pull requests
+- Weight and Biases: wandb, used for storing and tracking the trained model
+- Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
+- Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
+
+## 📂 PROJECT STRUCTURE
+The directory structure of the project looks like this:
+
+├── .dvc/                 <- Cache and config for data version control
+├── .github/workflows     <- Includes the steps for GitHub Actions
+├── data                  <- Run dvc pull to see this folder
+│   └── filtered          <- Seperated raw data, one file is one meassurement
+│   └── normalized        <- Normalized filtered data 
+│   ├── processed         <- Torch sensors from normalized data and concatenated csv 
+│   └── raw               <- Original meassurements
+├── dockerfiles           <- Storage of out dockerfiles
+│   └── conda_wheel       <- Setups the machine and open interactive environement
+│   ├── train_wheel       <- Runs train_model.py that upload the new model to wandb
+│   └── serve_model       <- Serves the model using FastAPId the new model to wandb
+│   └── README            <- Notes and few commands regarding the dockerfiles struggle
+├── docs                  <- Documentation folder
+│   ├── index.md          <- Homepage for your documentation
+│   ├── mkdocs.yml        <- Configuration file for mkdocs
+│   └── source/           <- Source directory for documentation files
+├── models                <- Trained and serialized models, model predictions, or model summaries
+├── reports               <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures/          <- Generated graphics and figures to be used in reporting
+│   └── README            <- Exam questions and project work progress
+├── src                   <- Source code
+│   ├── data              <- Scripts to download or generate data
+│   │   └── filter        <- Seperates the meassurement into csv files
+│   │   └── make_dataset  <- Runs filter->normalize->process as one script
+│   │   └── normalize     <- Normalizes the filtered data
+│   │   └── process       <- Changes normalized data into torch files and concatenated csv 
+│   │   └── README        <- Includes more details about the scripts
+│   │   └── utils         <- File with custom functions
+│   ├── models            <- Model implementations, training script and prediction script
+│   │   └── arch_model    <- Old model class definition and function calls
+│   │   └── arch_train_m  <- Old model using Forecasting and TemporalFusionTransformer
+│   │   └── model         <- New lightweight model class definition and function calls
+│   │   └── predict_model <- Predicts the result from unseen data
+│   │   └── train_model   <- New lightweight model using Lightning's LTSM 
+├── tests                 <- Contains all pytest for Github workflow
+│   └── test_data         <- Checks if data exist and the data shape
+│   ├── test_model        <- Check if the trained model is correct
+└── .gitignore            <- Data that are now pushed to GitHub
+└── data.dvc              <- Links the newest data from GCP Cloud Storage
+└── environment.yml       <- Requirements for new conda env, also used inside docker
+└── LICENSE               <- Open-source license info
+├── Makefile              <- Makefile with convenience commands like `make data` or `make train`
+├── pyproject.toml        <- Project (python) configuration file
+├── README.md             <- The top-level README which you are reading right now
+├── requirements.txt      <- The pip requirements file for reproducing the environment
 
 ## 🙏 Acknowledgements
 
