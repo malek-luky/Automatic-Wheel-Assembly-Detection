@@ -29,3 +29,4 @@ dependencies:
           - coverage==7.4.0
           - soundfile==0.12.1
           - gcloud==0.18.3
+          - google-api-python-client==2.113.0

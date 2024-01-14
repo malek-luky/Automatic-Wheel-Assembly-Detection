@@ -4,6 +4,11 @@
 - Build locally with:  `mkdocs build`
 - Serve locally with: `mkdocs serve`
 
+## TODO
+- As part of docs we should describe more in details what is each make ___ doing in the background
+- Also we should move the less important parts of README here
+- Move there also the readme from dockerfiles and delete it there
+
 ## 🚀 Getting Started
 
 Steps to build the repository in conda or docker
