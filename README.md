@@ -100,9 +100,9 @@ make docker_<conda/train/deplot>_online
 
 You can use the following command as well:
 ```
-gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20
+gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20 --container-env=WANDB_API_KEY=<YOUR_WANDB_API_KEY> \
 ```
-<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> example:
+`ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY` example:
 ```
 europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
 ```
