@@ -1,7 +1,7 @@
 name: Build and Push Docker Training Image to GCP Artifact Registry
 
 env:
-    IMAGE_NAME: train_model_test_vm
+    IMAGE_NAME: train_model_vm
 
 on:
     push:
@@ -35,8 +35,8 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   context: .
-                  file: dockerfiles/conda_setup.dockerfile
-                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{env.IMAGE_NAME}}:latest
+                  file: dockerfiles/train_model_vm.dockerfile
+                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/docker-images/${{env.IMAGE_NAME}}:latest
                   cache-from: type=local,src=/tmp/.buildx-cache
                   cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
