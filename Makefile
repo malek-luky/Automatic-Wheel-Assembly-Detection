@@ -44,11 +44,11 @@ docker_conda:
 
 docker_train:
 	docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
-	docker run --name trainer -it --entrypoint /bin/bash trainer:latest
+	docker run --name trainer trainer:latest
 
 docker_deploy:
 	docker build -f dockerfiles/deploy_model.dockerfile . -t deploy:latest
-	docker run --name model-deploy -it --entrypoint /bin/bash deploy:latest
+	docker run --name model-deploy deploy:latest
 
 ## Docker Online
 docker_conda_online:

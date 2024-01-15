@@ -36,7 +36,7 @@ jobs:
               with:
                   context: .
                   file: dockerfiles/train_model_vm.dockerfile
-                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:latest
+                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:${{ github.sha }}
                   cache-from: type=local,src=/tmp/.buildx-cache
                   cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
