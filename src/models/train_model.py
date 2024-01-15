@@ -136,7 +136,9 @@ def train_routine(config=None) -> None:
         type="model"
         )
         model_artifact.add_file(f'models/model_{time}.pth')
-        run.log_artifact(model_artifact) # logs the model version "my_model:v0"
+        run.log_artifact(model_artifact) # saves the model to wandb artifact registry"
+        run.link_artifact(model_artifact, "model-registry/basic-LTSM") # links to model as the best model
+        # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
 
 @click.command()
 @click.option('--train', is_flag=True, default=True, help='Use to only train the model.')
