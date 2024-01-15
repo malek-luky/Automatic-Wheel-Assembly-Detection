@@ -5,6 +5,9 @@ docs/site/
 wandb/
 lightning_logs/
 
+# Checkpoints
+automatic-wheel-assembly-detection/
+
 # Garbage from training
 *.lr*
 tb_logs/*
