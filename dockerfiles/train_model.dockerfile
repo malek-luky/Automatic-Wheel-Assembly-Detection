@@ -15,6 +15,7 @@ SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 
 # Copy the necessary project files into the container
 COPY src ./src
+COPY models ./models
 COPY pyproject.toml .
 COPY .git ./.git
 
@@ -29,4 +30,4 @@ COPY .dvc ./.dvc
 RUN dvc pull
 
 # Set the command to run the train_model.py script
-CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/model/train_model.py --wandb_on"]
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/models/train_model.py", "--wandb_on"]
