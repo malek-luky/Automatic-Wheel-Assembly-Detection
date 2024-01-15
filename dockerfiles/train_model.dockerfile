@@ -29,4 +29,4 @@ COPY .dvc ./.dvc
 RUN dvc pull
 
 # Set the command to run the train_model.py script
-CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/model/train_model.py"]
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/model/train_model.py --wandb_on"]

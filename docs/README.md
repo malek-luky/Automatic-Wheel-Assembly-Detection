@@ -72,7 +72,7 @@ cd Automatic-Wheel-Assembly-Detection
 **Build the image**
 
 ```
-docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t wheel:latest
+docker build -f dockerfiles/conda_setup.dockerfile . -t wheel:latest
 ```
 
 **Run the container**

@@ -16,8 +16,8 @@ In this modified Dockerfile, the conda env create command is used to create a Co
 - Now the stores image on GCP can be immediately deployed (both online and locally)
 
 ## COMMANDS
-- `docker build -f train_wheel_assembly_detection.dockerfile . -t trainer:latest` (builds trainer image)
-- `docker build -f conda_wheel_assembly_detection.dockerfile . -t conda:latest` (builds conda image)
+- `docker build -f train_model.dockerfile . -t trainer:latest` (builds trainer image)
+- `docker build -f conda_setup.dockerfile . -t conda:latest` (builds conda image)
 - `docker run --name instance1 -it --entrypoint /bin/bash train:latest` (interactive mode)
 - `docker run --name instance1 trainer:latest` (just run the docker)
 - `docker run --name instance1 -v %cd%/models:/models/ trainer:latest` (automatically copies the created files to local machine, otherwise they will be only inside the docker)
