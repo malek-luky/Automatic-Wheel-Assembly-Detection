@@ -177,6 +177,7 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 	- Compute Engine: Enables creating virtual machines
 	- Functions / Run: Deployment
 	- Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")
+- OmegaConf: Handle the config data for train_model.py
 - CookieCutter: Template used for generating code sctructure
 - DVC: Data versioning tool, similar is github but for data
 - GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP 
