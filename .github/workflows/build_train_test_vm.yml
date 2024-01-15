@@ -1,7 +1,7 @@
 name: Build and Push Docker Training Image to GCP Artifact Registry
 
 env:
-    IMAGE_NAME: train_model
+    IMAGE_NAME: train_model_test_vm
 
 on:
     push:
@@ -36,7 +36,7 @@ jobs:
               with:
                   context: .
                   file: dockerfiles/conda_setup.dockerfile
-                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/trainer:latest
+                  tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{env.IMAGE_NAME}}:latest
                   cache-from: type=local,src=/tmp/.buildx-cache
                   cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
