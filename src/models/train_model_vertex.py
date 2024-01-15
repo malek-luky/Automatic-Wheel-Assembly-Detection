@@ -1,5 +1,5 @@
 from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import WandbLogger
+# from pytorch_lightning.loggers import WandbLogger
 
 from datetime import datetime
 import pandas as pd
@@ -11,14 +11,14 @@ from torch.utils.data import DataLoader, TensorDataset
 from src.models.model import TireAssemblyLSTM
 
 # HYPERPARAMETERS (consider using either hydra or load them from a config file or pass them as arguments)
-MAX_EPOCHS = 10
+MAX_EPOCHS = 2
 BATCH_SIZE = 64
 HIDDEN_LAYER_SIZE = 50  # Example size, adjust based on your needs
 OUTPUT_SIZE = 1
 SEQUENCE_LENGTH = 10  # number of time steps to consider for each sequence
 
 # WANDB SETUP
-wandb_logger = WandbLogger(project="automatic-wheel-assembly-detection", entity="02476mlops")
+# wandb_logger = WandbLogger(project="automatic-wheel-assembly-detection", entity="02476mlops")
 
 # Load dataset (call script from root directory -> python src/models/train_model.py)
 df = pd.read_csv('data/processed/dataset_concatenated.csv')
@@ -69,7 +69,7 @@ test_loader = DataLoader(test_data, batch_size=BATCH_SIZE)
 
 # Train the model
 trainer = Trainer(
-    logger=wandb_logger,
+    #    logger=wandb_logger,
     max_epochs=MAX_EPOCHS,
 )
 
