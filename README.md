@@ -104,7 +104,7 @@ gcloud compute instances create-with-container <name_of_instance> --container-im
 ```
 <ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> example:
 ```
-europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_wheel_assembly_detection:30bfff9d67e13b398188608b94c44662bca1fb06
+europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
 ```
 
 ### Running Docker inside VM
@@ -112,7 +112,7 @@ europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-im
 To run the dockerm you can follow the Build and Run #1 steps above (`gcloud` command is not installed in VM) or you can start the instance with specified docker container following "Create VM Machne"
 
 Another option is to create the instance using image in Artifact Registry
-1) Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_wheel_assembly_detection?project=wheel-assembly-detection)
+1) Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_setup?project=wheel-assembly-detection)
 2) Click the three dots and click `Deploy in GCE`
 3) Create new instance using the "Create VM Machine" steps
 
@@ -175,7 +175,8 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 	- Cloud Storage: Stores data for dvc pull
 	- Artifact Registry: Stores built docker images (can be created into container)
 	- Compute Engine: Enables creating virtual machines
-	- Vertex AI: includes virtual machines, but its made for training AI models ("abstraction above abstraction...")
+	- Functions / Run: Deployment
+	- Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")
 - CookieCutter: Template used for generating code sctructure
 - DVC: Data versioning tool, similar is github but for data
 - GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP 

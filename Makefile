@@ -39,11 +39,11 @@ conda:
 
 ## Docker
 docker_conda:
-	docker build -f dockerfiles/conda_wheel_assembly_detection.dockerfile . -t conda_wheel:latest
+	docker build -f dockerfiles/conda_setup.dockerfile . -t conda_wheel:latest
 	docker run --name conda_wheel -it --entrypoint /bin/bash conda_wheel:latest
 
 docker_train:
-	docker build -f dockerfiles/train_wheel_assembly_detection.dockerfile . -t trainer:latest
+	docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
 	docker run --name trainer -it --entrypoint /bin/bash trainer:latest
 
 docker_deploy:
@@ -53,11 +53,11 @@ docker_deploy:
 ## Docker Online
 docker_conda_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
-	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_wheel_assembly_detection:30bfff9d67e13b398188608b94c44662bca1fb06
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
 
 docker_train_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
-	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_wheel_assembly_detection:f7e8c513ee0310e6bb26b7b81c8d015fd889f89a
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:f7e8c513ee0310e6bb26b7b81c8d015fd889f89a
 
 docker_deploy_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
