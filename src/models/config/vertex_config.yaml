@@ -4,4 +4,4 @@ workerPoolSpecs:
         machineType: n1-highmem-4
     replicaCount: 1
     containerSpec:
-        imageUri: europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train:v1
+        imageUri: europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:latest
