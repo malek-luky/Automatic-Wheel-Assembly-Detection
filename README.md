@@ -68,18 +68,20 @@ make conda
 This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
 
 ### Build and Run #1
-Build the container locally after downloading the repository.
+Build the container locally after downloading the repository. The WANDB_API_KEY is necessary only for train_model dockerfile.
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
-make docker_<conda/train/deploy>
+docker build -f dockerfiles/<train_model/conda_setup/deploy_model>.dockerfile . -t trainer:latest
+docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ```
 
 ### Build and Run #2
 
-Pulls the docker image from GCP Artifact Registry, no need to clone the repo.
+Pulls the docker image from GCP Artifact Registry, no need to clone the repo. The WANDB_API_KEY is necessary only for docker_train_online
 ```
 make docker_<conda/train/deplot>_online
+docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ```
 
 ## 💻 Google Cloud Computing

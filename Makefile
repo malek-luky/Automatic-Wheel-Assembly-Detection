@@ -22,10 +22,6 @@ requirements:
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 	$(PYTHON_INTERPRETER) -m pip install .
 
-## Install Developer Python Dependencies
-dev_requirements: requirements
-	$(PYTHON_INTERPRETER) -m pip install .["dev"]
-
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
@@ -37,27 +33,14 @@ conda:
 	conda activate DTU_ML_Ops
 	dvc pull
 
-## Docker
-docker_conda:
-	docker build -f dockerfiles/conda_setup.dockerfile . -t conda_wheel:latest
-	docker run --name conda_wheel -it --entrypoint /bin/bash conda_wheel:latest
-
-docker_train:
-	docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
-	docker run --name trainer trainer:latest
-
-docker_deploy:
-	docker build -f dockerfiles/deploy_model.dockerfile . -t deploy:latest
-	docker run --name model-deploy deploy:latest
-
 ## Docker Online
 docker_conda_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
-	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:latest
 
 docker_train_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
-	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:f7e8c513ee0310e6bb26b7b81c8d015fd889f89a
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:latest
 
 docker_deploy_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
