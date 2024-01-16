@@ -24,7 +24,14 @@ jobs:
                 path: /tmp/.buildx-cache
                 key: ${{ runner.os }}-buildx-build_train_vm
                 restore-keys: |
-                  ${{ runner.os }}-buildx-
+                  ${{ runner.os }}-buildx-buildx-build_train_vm
+                  ${{ runner.os }}-buildx-buildx-
+                  ${{ runner.os }}-
+
+            - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+                    name: List the state of node modules
+                    continue-on-error: true
+                    run: npm list
 
             - name: Login to GCP Artifact Registry
               uses: google-github-actions/auth@v2
@@ -46,6 +53,3 @@ jobs:
                   file: dockerfiles/train_model_vm.dockerfile
                   tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:latest
                   push: true
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
-                  load: true
