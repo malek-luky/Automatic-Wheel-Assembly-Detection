@@ -17,17 +17,14 @@ SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 COPY src ./src
 COPY models ./models
 COPY pyproject.toml .
-COPY .git ./.git
+
+# If you want to build the image locally, you need to download the service account key and set it as an environment variable 
+
+# COPY vertex-sa.json ./vertex-sa.json
+# ENV GOOGLE_APPLICATION_CREDENTIALS="/app/vertex-sa.json"
 
 # Install the local package
 RUN pip install -e .
 
-# Copy the DVC files
-COPY data.dvc .
-COPY .dvc ./.dvc
-
-# Run DVC pull to fetch the data
-RUN dvc pull
-
 # Set the command to run the train_model.py script
-CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/models/train_model_vertex.py"]
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/models/train_model.py"]

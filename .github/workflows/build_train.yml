@@ -1,7 +1,10 @@
-name: Build and Push Docker Training Image to GCP Artifact Registry
+name: Build, Push Docker Training Image and Run Vertex AI Job
 
 env:
     IMAGE_NAME: train_model
+    REGION: europe-west1
+    DISPLAY_NAME: train-model:${{ github.sha }}
+    VERTEX_CONFIG_PATH: src/models/config/vertex_config.yaml
 
 on:
     push:
@@ -37,6 +40,26 @@ jobs:
                   context: .
                   file: dockerfiles/train_model.dockerfile
                   tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:latest
-                  cache-from: type=local,src=/tmp/.buildx-cache
-                  cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
+
+            - name: Run Vertex AI Custom Job
+              run: |
+                  gcloud ai custom-jobs create \
+                    --region=${{ env.REGION }} \
+                    --display-name=${{ env.DISPLAY_NAME }} \
+                    --config=${{ env.VERTEX_CONFIG_PATH }}
+
+            - name: Cache Docker layers
+              uses: actions/cache@v2
+              with:
+                path: /tmp/.buildx-cache
+                key: ${{ runner.os }}-buildx-build_train_vm
+                restore-keys: |
+                  ${{ runner.os }}-buildx-buildx-build_train_vm
+                  ${{ runner.os }}-buildx-buildx-
+                  ${{ runner.os }}-
+
+            - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+              name: List the state of node modules
+              continue-on-error: true
+              run: npm list
