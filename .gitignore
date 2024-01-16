@@ -4,6 +4,7 @@ docs/site/
 
 wandb/
 lightning_logs/
+vertex-sa.json
 
 # Checkpoints
 automatic-wheel-assembly-detection/
