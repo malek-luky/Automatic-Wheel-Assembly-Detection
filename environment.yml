@@ -30,5 +30,7 @@ dependencies:
           - soundfile==0.12.1
           - gcloud==0.18.3
           - google-api-python-client==2.113.0
+          - click==8.1.7
+          - omegaconf==2.3.0
           - google-cloud-storage==2.14.0
           - google-cloud-secret-manager==2.17.0

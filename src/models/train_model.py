@@ -148,7 +148,7 @@ def train_routine(config=None) -> None:
 @click.option('--train', is_flag=True, default=True, help='Use to only train the model.')
 @click.option('--sweep', is_flag=True, default=False, help='Use to sweep hyperparameters.')
 @click.option('--sweep_iter', default=5, help='Number of iterations for hyperparameters sweeping.')
-@click.option('--wandb_on', is_flag=True, default=False,
+@click.option('--wandb_on', is_flag=True, default=True,
               help='Use to connect to Wandb service. Automatically set to True if --sweep is defined. Otherwise False')
 @click.option('--wandb_project', default="automatic-wheel-assembly-detection",
               help='Your wandb project name. Default is "automatic-wheel-assembly-detection"')

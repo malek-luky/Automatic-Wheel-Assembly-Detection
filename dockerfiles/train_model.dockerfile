@@ -27,4 +27,4 @@ COPY pyproject.toml .
 RUN pip install -e .
 
 # Set the command to run the train_model.py script
-CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/models/train_model.py", "--wandb_on"]
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "python", "src/models/train_model.py"]

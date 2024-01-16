@@ -40,8 +40,6 @@ jobs:
                   context: .
                   file: dockerfiles/train_model.dockerfile
                   tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:latest
-                  cache-from: type=local,src=/tmp/.buildx-cache
-                  cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
 
             - name: Run Vertex AI Custom Job
@@ -50,3 +48,18 @@ jobs:
                     --region=${{ env.REGION }} \
                     --display-name=${{ env.DISPLAY_NAME }} \
                     --config=${{ env.VERTEX_CONFIG_PATH }}
+
+            - name: Cache Docker layers
+              uses: actions/cache@v2
+              with:
+                path: /tmp/.buildx-cache
+                key: ${{ runner.os }}-buildx-build_train_vm
+                restore-keys: |
+                  ${{ runner.os }}-buildx-buildx-build_train_vm
+                  ${{ runner.os }}-buildx-buildx-
+                  ${{ runner.os }}-
+
+            - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+              name: List the state of node modules
+              continue-on-error: true
+              run: npm list
