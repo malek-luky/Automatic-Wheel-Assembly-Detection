@@ -1,4 +1,4 @@
-name: Build and Push Docker Conda Image of our entire project to GCP Artifact Registry
+name: Build and Push Docker Conda Image to GCP Artifact Registry
 
 env:
     IMAGE_NAME: conda_setup
