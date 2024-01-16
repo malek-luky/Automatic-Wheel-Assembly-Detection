@@ -114,10 +114,8 @@ def train_routine(config=None) -> None:
 
 
     # Train the model
-    trainer = Trainer(
-        logger=wandb_logger,
-        max_epochs=hparams.max_epochs,
-    )
+    trainer = Trainer(max_epochs=hparams.max_epochs)
+        #logger=wandb_logger)
 
     trainer.fit(model, train_loader)
 
@@ -130,21 +128,21 @@ def train_routine(config=None) -> None:
 
     # save the model in gcloud storage bucket
     # create a run and log a model artifact to it
-    with wandb.init(project="automatic-wheel-assembly-detection") as run:
-        model_artifact = wandb.Artifact(
-        name="mlops_model", 
-        type="model"
-        )
-        model_artifact.add_file(f'models/model_{time}.pth')
-        run.log_artifact(model_artifact) # saves the model to wandb artifact registry"
-        run.link_artifact(model_artifact, "model-registry/basic-LTSM") # links to model as the best model
-        # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
+    # with wandb.init(project="automatic-wheel-assembly-detection") as run:
+    #     model_artifact = wandb.Artifact(
+    #     name="mlops_model", 
+    #     type="model"
+    #     )
+    #     model_artifact.add_file(f'models/model_{time}.pth')
+    #     run.log_artifact(model_artifact) # saves the model to wandb artifact registry"
+    #     run.link_artifact(model_artifact, "model-registry/basic-LTSM") # links to model as the best model
+    #     # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
 
 @click.command()
 @click.option('--train', is_flag=True, default=True, help='Use to only train the model.')
 @click.option('--sweep', is_flag=True, default=False, help='Use to sweep hyperparameters.')
 @click.option('--sweep_iter', default=5, help='Number of iterations for hyperparameters sweeping.')
-@click.option('--wandb_on', is_flag=True, default=True, help='Use to connect to Wandb service. Automatically set to True if --sweep is defined. Otherwise False')
+@click.option('--wandb_on', is_flag=True, default=False, help='Use to connect to Wandb service. Automatically set to True if --sweep is defined. Otherwise False')
 @click.option('--wandb_project', default="automatic-wheel-assembly-detection", 
               help='Your wandb project name. Default is "automatic-wheel-assembly-detection"')
 @click.option('--wandb_entity', default="02476mlops", 

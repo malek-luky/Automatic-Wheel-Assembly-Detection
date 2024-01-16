@@ -27,8 +27,9 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
- ## Create Conda environment
+ ## Create Conda environment (pip install -e . download local packages)
 conda:
+	pip install -e . 
 	conda env create -f environment.yml
 	conda activate DTU_ML_Ops
 	dvc pull
