@@ -36,3 +36,4 @@ dependencies:
           - google-cloud-secret-manager==2.17.0
           - fastapi==0.109.0
           - uvicorn==0.26.0
+          - fastapi-restful[all]
