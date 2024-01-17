@@ -26,7 +26,7 @@ COPY pyproject.toml .
 RUN pip install -e .
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 80
 
 # Set the command to run the FastAPI app using Uvicorn
-CMD ["conda", "run", "-n", "DTU_ML_Ops", "uvicorn", "src.models.serve_model:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["conda", "run", "-n", "DTU_ML_Ops", "uvicorn", "src.models.serve_model:app", "--host", "0.0.0.0", "--port", "80"]
