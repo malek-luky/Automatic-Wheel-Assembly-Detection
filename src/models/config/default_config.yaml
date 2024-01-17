@@ -1,5 +1,6 @@
 max_epochs: 10
 batch_size: 64
 hidden_layer_size: 50
+input_size: 8
 output_size: 1
 sequence_length: 10
