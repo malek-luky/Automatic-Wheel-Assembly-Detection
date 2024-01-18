@@ -1,12 +1,12 @@
 name: Run data pytest on pull request
 on:
-  push:
+  pull_request:
     branches:
       - main  # Add the branch you want to trigger the workflow
 
 jobs:
-  test:
-    name: Run pytest
+  pytests:
+    name: Pytest Workflow
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

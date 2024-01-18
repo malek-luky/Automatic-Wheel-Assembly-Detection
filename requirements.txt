@@ -28,3 +28,5 @@ functions-framework==3.5.0
 fastapi==0.109.0
 uvicorn==0.26.0
 fastapi-restful[all]
+pytest-cov==4.1.0
+scikit-learn==1.4.0
