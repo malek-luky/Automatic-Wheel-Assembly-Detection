@@ -1,6 +1,6 @@
 name: Run data pytest on pull request
 on:
-  push:
+  pull_request:
     branches:
       - main  # Add the branch you want to trigger the workflow
 

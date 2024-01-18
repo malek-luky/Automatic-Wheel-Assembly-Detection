@@ -1,7 +1,6 @@
 # Data
 data/
 docs/site/
-
 wandb/
 lightning_logs/
 vertex-sa.json
@@ -16,9 +15,10 @@ automatic-wheel-assembly-detection/
 
 # Garbage from training
 *.lr*
-tb_logs/*
+tb_logs/
 training.pkl
 validation.pkl
+Checkpoints/
 
 # test cache
 manual_test/
