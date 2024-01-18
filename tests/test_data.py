@@ -1,6 +1,6 @@
 import os
+
 import torch
-import pytest
 
 _TEST_ROOT = os.path.dirname(__file__)  # root of test folder
 _PROJECT_ROOT = os.path.dirname(_TEST_ROOT)  # root of project
@@ -15,7 +15,6 @@ def test_folder_path_exists():
 
 
 def test_folder_contents():
-
     # Check if there are more than 90 items in the folder
     folder_path = os.path.join(data_dir, "processed")
     assert len(os.listdir(folder_path)) > 90, "There are not enough items in the folder, did dvc pull run correctly?"
@@ -32,5 +31,6 @@ def test_folder_contents():
     assert isinstance(item, torch.Tensor), "The item is not a torch file"
 
     # Check its dimensions
-    assert item.size()[
-        1] == 10, "The item does not have the expected dimensions, should include ten columns, but it does not match"
+    assert (
+        item.size()[1] == 10
+    ), "The item does not have the expected dimensions, should include ten columns, but it does not match"

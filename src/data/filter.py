@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import os
-import git
-import argparse
-import pandas as pd
 
+import argparse
+import os
+
+import git
+import pandas as pd
 # Local imports
 from utils import find_git_root_folder
 from src.helper.logger import logger
-
 
 """filter.py: Filter raw .csv files and preserve specific columns."""
 
