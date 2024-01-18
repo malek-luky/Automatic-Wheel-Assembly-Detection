@@ -15,6 +15,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from src.models.model import TireAssemblyLSTM
 from src.helper.gcp_utils import load_bucket_data, get_secret
+from src.helper.logger import logger
 
 # WANDB SETUP
 WANDB_DEFINED = False
@@ -92,12 +93,14 @@ def train_routine(config=None) -> None:
             wandb_logger = None
 
     # Create sequences for each experiment
+    logger.info("Creating sequences...")
     X_seq, y_seq = create_sequences(df, hparams.sequence_length)
 
     # Split the data into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(X_seq, y_seq, test_size=0.2, random_state=42)
 
     # Convert to PyTorch tensors
+    logger.info("Converting to PyTorch tensors...")
     X_train_tensor = torch.from_numpy(X_train).float()
     y_train_tensor = torch.from_numpy(y_train).float()
     X_test_tensor = torch.from_numpy(X_test).float()
@@ -108,6 +111,7 @@ def train_routine(config=None) -> None:
     test_data = TensorDataset(X_test_tensor, y_test_tensor)
 
     # Define the model
+    logger.info("Defining the model...")
     input_size = X_train.shape[2]
     hidden_layer_size = hparams.hidden_layer_size
     output_size = hparams.output_size
@@ -115,10 +119,12 @@ def train_routine(config=None) -> None:
     model = TireAssemblyLSTM(input_size, hidden_layer_size, output_size)
 
     # Create DataLoaders
+    logger.info("Creating DataLoaders...")
     train_loader = DataLoader(train_data, batch_size=hparams.batch_size, shuffle=True)
     test_loader = DataLoader(test_data, batch_size=hparams.batch_size)
 
     # Train the model
+    logger.info("Training the model...")
     trainer = Trainer(
         logger=wandb_logger,
         max_epochs=hparams.max_epochs,
@@ -127,22 +133,25 @@ def train_routine(config=None) -> None:
     trainer.fit(model, train_loader)
 
     # Test the model
+    logger.info("Testing the model...")
     trainer.test(dataloaders=test_loader)
 
     # Save the model
+    logger.info("Saving the model locally...")
     time = datetime.now().strftime("%Y%m%d-%H%M%S")
     torch.save(model.state_dict(), f'models/model_{time}.pth')
 
     # save the model in gcloud storage bucket
     # create a run and log a model artifact to it
+    logger.info("Saving the model to GCP bucket...")
     with wandb.init(project="automatic-wheel-assembly-detection") as run:
         model_artifact = wandb.Artifact(
-        name="mlops_model", 
-        type="model"
+            name="mlops_model",
+            type="model"
         )
         model_artifact.add_file(f'models/model_{time}.pth')
-        run.log_artifact(model_artifact) # saves the model to wandb artifact registry"
-        run.link_artifact(model_artifact, "model-registry/basic-LTSM") # links to model as the best model
+        run.log_artifact(model_artifact)  # saves the model to wandb artifact registry"
+        run.link_artifact(model_artifact, "model-registry/basic-LTSM")  # links to model as the best model
         # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
 
 
@@ -162,6 +171,14 @@ def parse_input(train: bool, sweep: bool, sweep_iter: int, wandb_on: bool, wandb
     WANDB_DEFINED = wandb_on
     WANDB_PROJECT = wandb_project
     WANDB_ENTITY = wandb_entity
+
+    logger.info("Starting training routine...")
+    logger.info("WANDB is set to " + str(WANDB_DEFINED))
+    logger.info("WANDB project is set to " + WANDB_PROJECT)
+    logger.info("WANDB entity is set to " + WANDB_ENTITY)
+
+    logger.info("Sweep is set to " + str(sweep))
+    logger.info("Sweep iterations is set to " + str(sweep_iter))
 
     if sweep:
         print("Sweeping hyperparameters with", sweep_iter, "iteration(s).")

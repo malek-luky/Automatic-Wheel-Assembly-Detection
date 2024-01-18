@@ -9,8 +9,10 @@ _PATH_DATA = os.path.join(_PROJECT_ROOT, "data")  # root of data
 # Get the absolute path to the data directory
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 
+
 def test_folder_path_exists():
     assert os.path.exists(data_dir), "The data folder does not exist, please run dvc pull"
+
 
 def test_folder_contents():
 
@@ -30,4 +32,5 @@ def test_folder_contents():
     assert isinstance(item, torch.Tensor), "The item is not a torch file"
 
     # Check its dimensions
-    assert item.size()[1] == 10, "The item does not have the expected dimensions, should include seven columns, but it does not match"
+    assert item.size()[
+        1] == 10, "The item does not have the expected dimensions, should include ten columns, but it does not match"

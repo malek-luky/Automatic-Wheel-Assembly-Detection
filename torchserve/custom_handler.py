@@ -8,8 +8,10 @@ HIDDEN_LAYER_SIZE = 50
 OUTPUT_SIZE = 1
 model = TireAssemblyLSTM(INPUT_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_SIZE)
 
-# Entry point function for the custom handler. This shiuld be enough if we only want to 
+# Entry point function for the custom handler. This shiuld be enough if we only want to
 # get predictions by calling  'curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T '
+
+
 def handle(data, context):
     """
     Works on data and context to create model object or process inference request.
@@ -35,23 +37,24 @@ def handle(data, context):
             raise RuntimeError("Missing the model.pt file")
 
         # can be used with jit for optimization, but then the model must be saved from torch.jit.script(model)
-        # model = torch.jit.load(model_pt_path) 
+        # model = torch.jit.load(model_pt_path)
         model.load_state_dict(torch.load(model_pt_path))
         model.eval()
 
-    #infer and return result
+    # infer and return result
     else:
         # process input data
         data = convert_bytearray_to_tensor(data)
-        
+
         # make predictions
         logits = model(data)
-        
+
         # Convert logits to probabilities
-        prediction_probability = torch.sigmoid(logits)  
-        
+        prediction_probability = torch.sigmoid(logits)
+
         # return prediction as dictionary
         return [{"predictions": prediction_probability.item()}]
+
 
 def convert_bytearray_to_tensor(bytearray_data):
     # Assuming the input is a list of dictionaries with 'body' key
@@ -73,4 +76,3 @@ def convert_bytearray_to_tensor(bytearray_data):
             item['body'] = tensor
     data = bytearray_data[0]['body'].unsqueeze(0)
     return data
-

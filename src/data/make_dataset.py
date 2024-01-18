@@ -7,6 +7,7 @@ import argparse
 import filter
 import normalize
 import process
+from src.helper.logger import logger
 
 """make_dataset.py: Filter raw .csv files and preserve specific columns. 
                     Then normalize data and save as torch tensor."""
@@ -21,6 +22,7 @@ __date__ = "2024/01/10"
 def main() -> None:
     """The main function."""
     # Create the parser
+    logger.info("Creating data sets...")
     parser = argparse.ArgumentParser(description="Process some CSV files.")
 
     # Add the arguments
