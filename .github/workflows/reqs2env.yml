@@ -1,12 +1,12 @@
 name: Read requirements.txt and mirror the packages to Conda environment.yml
 on:
-  push:
+  pull_request:
     branches:
       - main  # Add the branch you want to trigger the workflow
 
 jobs:
   test:
-    name: Mirror requirements.txt
+    name: Mirror Requirements.txt to Environment.yml
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,4 +34,4 @@ jobs:
           git config --global user.name "GitHub Action"
           git add environment.yml
           git commit -m "Update environment.yml" || exit 0  # Commit only if there are changes
-          git push
+          git push origin ${{ github.event.ref }}
