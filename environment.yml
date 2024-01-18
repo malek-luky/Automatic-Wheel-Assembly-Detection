@@ -29,12 +29,13 @@ dependencies:
           - soundfile==0.12.1
           - gcloud==0.18.3
           - google-api-python-client==2.113.0
-          - click==8.1.7
-          - omegaconf==2.3.0
           - google-cloud-storage==2.14.0
           - google-cloud-secret-manager==2.17.0
+          - click==8.1.7
+          - omegaconf==2.3.0
           - functions-framework==3.5.0
           - fastapi==0.109.0
           - uvicorn==0.26.0
           - fastapi-restful[all]
           - pytest-cov==4.1.0
+          - scikit-learn==1.4.0
