@@ -9,6 +9,7 @@ import pandas as pd
 import torch
 # Local imports
 from utils import find_git_root_folder
+from src.helper.logger import logger
 
 """process.py: Load normalized data from .csv files and save them to separate folder as .pt files."""
 
@@ -38,6 +39,7 @@ def save_CSVs_as_tensors_and_concatenate(
         Set to True if the script is run in the git repository, by default True
     """
     # If running in git, set path relative to the root of the repository
+    logger.info(f'Save CSVs as tensors and concatenate them into a single CSV file')
     if run_in_git:
         git_root = find_git_root_folder()
         src_folder = os.path.join(git_root, src_folder)

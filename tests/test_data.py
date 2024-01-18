@@ -33,4 +33,4 @@ def test_folder_contents():
     # Check its dimensions
     assert (
         item.size()[1] == 10
-    ), "The item does not have the expected dimensions, should include seven columns, but it does not match"
+    ), "The item does not have the expected dimensions, should include 10 columns, but it does not match"
