@@ -45,6 +45,7 @@ docker_train_online:
 
 docker_deploy_online:
 	gcloud auth configure-docker europe-west1-docker.pkg.dev
+	docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/served_model:latest
 
 ## Create VM Machine
 virtual_machine:

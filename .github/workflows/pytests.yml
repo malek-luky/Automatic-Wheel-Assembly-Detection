@@ -1,6 +1,6 @@
 name: Run data pytest on pull request
 on:
-  pull_request:
+  push:
     branches:
       - main  # Add the branch you want to trigger the workflow
 
@@ -35,14 +35,9 @@ jobs:
           dvc pull
           pip install -e .
 
-      - name: Run pytest
-        run: |
-          pytest --disable-warnings
-
-      - name: Run pytest with coverage
-        uses: lpenz/ghaction-pytest-cov@v1
-
-      - name: Upload coverage reports to Codecov
+      - name: Run tests and collect coverage
+        run: pytest --disable-warnings --cov=api.calculator --cov-report=xml
+      - name: Upload coverage reports to Codecov with GitHub Action
         uses: codecov/codecov-action@v3
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
