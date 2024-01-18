@@ -10,9 +10,10 @@ HIDDEN_LAYER_SIZE = 50
 OUTPUT_SIZE = 1
 model = TireAssemblyLSTM(INPUT_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_SIZE)
 
-
 # Entry point function for the custom handler. This shiuld be enough if we only want to
 # get predictions by calling  'curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T '
+
+
 def handle(data, context):
     """
     Works on data and context to create model object or process inference request.
@@ -29,7 +30,7 @@ def handle(data, context):
 
         properties = context.system_properties
         model_dir = properties.get("model_dir")
-        #device = torch.device("cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
+        # device = torch.device("cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
 
         # Read model serialize/pt file
         serialized_file = manifest["model"]["serializedFile"]
@@ -38,6 +39,7 @@ def handle(data, context):
             raise RuntimeError("Missing the model.pt file")
 
         # can be used with jit for optimization, but then the model must be saved from torch.jit.script(model)
+        # model = torch.jit.load(model_pt_path)
         # model = torch.jit.load(model_pt_path)
         model.load_state_dict(torch.load(model_pt_path))
         model.eval()

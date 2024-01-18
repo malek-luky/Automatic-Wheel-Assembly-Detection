@@ -9,14 +9,15 @@ import git
 import pandas as pd
 # Local imports
 from utils import find_git_root_folder
+from src.helper.logger import logger
 
 """filter.py: Filter raw .csv files and preserve specific columns."""
 
-__author__  = "Vratislav Besta"
-__group__   = "50"
+__author__ = "Vratislav Besta"
+__group__ = "50"
 __version__ = "1.0.1"
-__email__   = "bestavra@fel.cvut.cz"
-__date__    = "2024/01/10" 
+__email__ = "bestavra@fel.cvut.cz"
+__date__ = "2024/01/10"
 
 
 # Define the columns to be preserved
@@ -49,6 +50,7 @@ def process_csv_file(file_path: str, output_dir: str) -> None:
 
     # Create the output directory if it doesn't exist
     if not os.path.exists(output_dir):
+        logger.info(f'Creating output directory: {output_dir}')
         os.makedirs(output_dir)
 
     # Split the DataFrame into four separate DataFrames based on the #Identifier value
@@ -72,6 +74,7 @@ def process_all_csv_files(folder_path: str, output_dir: str, run_in_git: bool = 
     run_in_git : bool, optional
         Whether to run the script in a git repository, by default True
     """
+    logger.info(f'Processing all CSV files in {folder_path}')
     # If running in git, set path relative to the root of the repository
     if run_in_git:
         git_root = find_git_root_folder()
@@ -103,7 +106,8 @@ def main() -> None:
 
     # Add the arguments
     parser.add_argument('raw_data_path', type=str, nargs='?', default='data/raw', help='The path to the raw data')
-    parser.add_argument('filtered_data_path', type=str, nargs='?', default='data/filtered', help='The path to store the filtered data')
+    parser.add_argument('filtered_data_path', type=str, nargs='?', default='data/filtered',
+                        help='The path to store the filtered data')
 
     # Parse the arguments
     args = parser.parse_args()
