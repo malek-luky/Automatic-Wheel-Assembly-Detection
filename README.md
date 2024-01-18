@@ -229,6 +229,9 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 -   Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
 -   Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 
+## DIAGRAM
+[Diagram](reports/figures/diagram.png)
+
 ## 📂 PROJECT STRUCTURE
 
 The directory structure of the project looks like this:
