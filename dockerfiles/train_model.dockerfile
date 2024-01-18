@@ -15,7 +15,6 @@ SHELL ["conda", "run", "-n", "DTU_ML_Ops", "/bin/bash", "-c"]
 
 # Copy the necessary project files into the container
 COPY src ./src
-COPY models ./models
 COPY pyproject.toml .
 
 # If you want to build the image locally, you need to download the service account key and set it as an environment variable 
