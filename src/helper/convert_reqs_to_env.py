@@ -40,7 +40,7 @@ def create_env_yaml(requirements: List[str], env_template: dict, git_root: str) 
     env_data = env_template
     env_data['dependencies'] = ['python=3.10', 'pip', 'dvc', {'pip': requirements}]
 
-    with open(os.path.join(git_root, 'environment1.yml'), 'w') as file:
+    with open(os.path.join(git_root, 'environment.yml'), 'w') as file:
         yaml.dump(env_data, file, default_flow_style=False)
 
 
