@@ -1,7 +1,7 @@
-from google.cloud import secretmanager
-import pandas as pd
 import io
-from google.cloud import storage
+
+import pandas as pd
+from google.cloud import secretmanager, storage
 
 
 def load_bucket_data(bucket_name, path_in_bucket):
@@ -26,7 +26,7 @@ def load_bucket_data(bucket_name, path_in_bucket):
     data = blob.download_as_bytes()
 
     # Convert bytes to a string buffer and then to a DataFrame
-    return pd.read_csv(io.StringIO(data.decode('utf-8')))
+    return pd.read_csv(io.StringIO(data.decode("utf-8")))
 
 
 def get_secret(project_id, secret_id, version_id="latest"):
@@ -49,11 +49,11 @@ def get_secret(project_id, secret_id, version_id="latest"):
     response = client.access_secret_version(request={"name": name})
 
     # Return the secret payload as a string
-    return response.payload.data.decode('UTF-8')
+    return response.payload.data.decode("UTF-8")
 
 
 # Usage
-if __name__ == '__main__':
-    data = load_bucket_data('wheel-assembly-detection-dataset', 'data/processed/dataset_concatenated.csv')
-    secret = get_secret('wheel-assembly-detection', 'WANDB_API_KEY')
+if __name__ == "__main__":
+    data = load_bucket_data("wheel-assembly-detection-dataset", "data/processed/dataset_concatenated.csv")
+    secret = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
     print(secret)
