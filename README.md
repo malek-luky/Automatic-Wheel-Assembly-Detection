@@ -169,14 +169,31 @@ conda remove --name DTU_ML_Ops --all
 
 This repository is configured for deployment using Google Cloud️ ☁️. The images in this repository are re-built and deployed automatically using GitHub Actions and stored in Google Artifact Registry on every push to the `main` branch.
 
-When there are changes to the model or the data, we also automatically re-train the model store it in Google Cloud Storage and deploy it using Google Cloud Run.
+We also automatically re-train the model using **Vertex AI**, store it in **Weights & Biases** model registry and deploy it using Google Cloud Run.
 
 ## 🤖 Use our model
 
 The model is deployed using Google Cloud Run. You can make a prediction using the following command:
 
 ```
-curl -X POST https://INSERT-OUR-URL/predict -H "Content-Type: application/json" -d '{"data": [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]}'
+curl -X 'POST' \
+  'https://deployed-model-service-t2tcujqlqq-ew.a.run.app/predict' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "sequence": [
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.2, 0.3, 0.4, 0.3, 0.4, 0.5, 0.3, 0.2],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.2, 0.3, 0.4, 0.3, 0.4, 0.5, 0.3, 0.2]
+    ]
+}'
 ```
 
 ## 🤝 Contributing
