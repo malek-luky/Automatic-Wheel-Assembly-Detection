@@ -1,8 +1,8 @@
 # Car Wheel Assembly Detection 🚘
 
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/malek-luky/Automatic-Wheel-Assembly-Detection/main?style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/malek-luky/Automatic-Wheel-Assembly-Detection/.github%2Fworkflows%2Fconda-build.yml?branch=main&style=for-the-badge&label=Project%20Image%20Build)
-![Website](https://img.shields.io/website?url=http%3A%2F%2Fmodel-deploy.dk%2F&up_message=online&down_message=offline&style=for-the-badge&label=model)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/malek-luky/Automatic-Wheel-Assembly-Detection/main?style=flat)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/malek-luky/Automatic-Wheel-Assembly-Detection/.github%2Fworkflows%2Fbuild_conda.yml?branch=main&label=Project%20Image)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fdeployed-model-service-t2tcujqlqq-ew.a.run.app%2Fdocs&up_message=online&down_message=offline&style=flat&label=model)
 
 **Authors**: Elizaveta Isianova, Lukas Malek, Lukas Rasocha, Vratislav Besta, Weihang Li
 
@@ -57,6 +57,7 @@ Steps to build the repository in conda or docker
 ## 🐍 Conda
 
 ### Create the environment, install the dependencies and download the data
+
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
@@ -68,7 +69,9 @@ make conda
 This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
 
 ### Build and Run #1
+
 Build the container locally after downloading the repository. The WANDB_API_KEY is necessary only for train_model dockerfile.
+
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
@@ -79,6 +82,7 @@ docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ### Build and Run #2
 
 Pulls the docker image from GCP Artifact Registry, no need to clone the repo. The WANDB_API_KEY is necessary only for docker_train_online
+
 ```
 make docker_<conda/train/deplot>_online
 docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
@@ -88,23 +92,26 @@ docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 
 ### Create VM Machine
 
-1) Open [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
-2) Create a name
-3) Region: `europe-west1 (Belgium)`
-4) Zone: `europe-west1-b`
-5) Machine configuration: `Compute-optimized`
-6) Series: `C2D`
-7) Machine Type: `c2d-standard-4` (must have at least 16GB RAM)
-8) Boot disk: `20 GB`
-9) Container image: `<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY>` (click Deploy Container)
-10) Restart policy: `never`
-11) The rest is default
+1. Open [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
+2. Create a name
+3. Region: `europe-west1 (Belgium)`
+4. Zone: `europe-west1-b`
+5. Machine configuration: `Compute-optimized`
+6. Series: `C2D`
+7. Machine Type: `c2d-standard-4` (must have at least 16GB RAM)
+8. Boot disk: `20 GB`
+9. Container image: `<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY>` (click Deploy Container)
+10. Restart policy: `never`
+11. The rest is default
 
 You can use the following command as well:
+
 ```
 gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20 --container-env=WANDB_API_KEY=<YOUR_WANDB_API_KEY> \
 ```
+
 `ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY` example:
+
 ```
 europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
 ```
@@ -114,21 +121,23 @@ europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-im
 To run the dockerm you can follow the Build and Run #1 steps above (`gcloud` command is not installed in VM) or you can start the instance with specified docker container following "Create VM Machne"
 
 Another option is to create the instance using image in Artifact Registry
-1) Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_setup?project=wheel-assembly-detection)
-2) Click the three dots and click `Deploy in GCE`
-3) Create new instance using the "Create VM Machine" steps
+
+1. Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_setup?project=wheel-assembly-detection)
+2. Click the three dots and click `Deploy in GCE`
+3. Create new instance using the "Create VM Machine" steps
 
 ### Connecting to VM machine
 
-- Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
-- Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
+-   Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
+-   Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
 
 ### How to check if the Docker is deployed in VM?
-- ssh into the VM
-- `docker ps`: shows the docker files running on the machine
-- `docker logs <CONATINER_ID>` wait until its successfully pulled
-- `docker ps`: pulled container has new ID
-- `docker exec -it CONTAINER-ID /bin/bash`: starts the docker in interactive window (only the conda_wheel_assemly_detection, the rest only train the model, upload the model and exits, maybe setting the restart policy to "never" should fix this issue)
+
+-   ssh into the VM
+-   `docker ps`: shows the docker files running on the machine
+-   `docker logs <CONATINER_ID>` wait until its successfully pulled
+-   `docker ps`: pulled container has new ID
+-   `docker exec -it CONTAINER-ID /bin/bash`: starts the docker in interactive window (only the conda_wheel_assemly_detection, the rest only train the model, upload the model and exits, maybe setting the restart policy to "never" should fix this issue)
 
 ### Troublshooting
 
@@ -137,17 +146,21 @@ If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.
 ## 👀 Optional
 
 ### Re-process the data
-It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.**
+
+It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.\*\*
+
 ```
 python src/data/make_dataset.py
 ```
 
 ### Re-train the model
+
 ```
 python src/models/train_model.py
 ```
 
 ### Remove the conda environment
+
 ```
 conda remove --name DTU_ML_Ops --all
 ```
@@ -171,26 +184,29 @@ curl -X POST https://INSERT-OUR-URL/predict -H "Content-Type: application/json" 
 Contributions are always welcome! If you have any ideas or suggestions for the project, please create an issue or submit a pull request. Please follow these [conventions](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) for commit messages.
 
 ## 💻 Technology Used
-- Docker: "PC Setup" inside the docker file
-- Conda: Package manager
-- GCP
-	- Cloud Storage: Stores data for dvc pull
-	- Artifact Registry: Stores built docker images (can be created into container)
-	- Compute Engine: Enables creating virtual machines
-	- Functions / Run: Deployment
-	- Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")
-- OmegaConf: Handle the config data for train_model.py
-- CookieCutter: Template used for generating code sctructure
-- DVC: Data versioning tool, similar is github but for data
-- GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP 
-- Pytest: Runs some tests to check whether the code is working
-- CodeCov: Tool for uploading coverage report from pytest as a comment to pull requests
-- Weight and Biases: wandb, used for storing and tracking the trained model
-- Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
-- Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
+
+-   Docker: "PC Setup" inside the docker file
+-   Conda: Package manager
+-   GCP
+    -   Cloud Storage: Stores data for dvc pull
+    -   Artifact Registry: Stores built docker images (can be created into container)
+    -   Compute Engine: Enables creating virtual machines
+    -   Functions / Run: Deployment
+    -   Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")
+-   OmegaConf: Handle the config data for train_model.py
+-   CookieCutter: Template used for generating code sctructure
+-   DVC: Data versioning tool, similar is github but for data
+-   GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP
+-   Pytest: Runs some tests to check whether the code is working
+-   CodeCov: Tool for uploading coverage report from pytest as a comment to pull requests
+-   Weight and Biases: wandb, used for storing and tracking the trained model
+-   Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
+-   Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 
 ## 📂 PROJECT STRUCTURE
+
 The directory structure of the project looks like this:
+
 ```
 ├── .dvc/                 <- Cache and config for data version control
 ├── .github/workflows     <- Includes the steps for GitHub Actions
@@ -201,8 +217,8 @@ The directory structure of the project looks like this:
 │   ├── pytest_model      <- Runs the model pytests
 ├── data                  <- Run dvc pull to see this folder
 │   └── filtered          <- Seperated raw data, one file is one meassurement
-│   └── normalized        <- Normalized filtered data 
-│   ├── processed         <- Torch sensors from normalized data and concatenated csv 
+│   └── normalized        <- Normalized filtered data
+│   ├── processed         <- Torch sensors from normalized data and concatenated csv
 │   └── raw               <- Original meassurements
 ├── dockerfiles           <- Storage of out dockerfiles
 │   └── conda_wheel       <- Setups the machine and open interactive environement
@@ -222,7 +238,7 @@ The directory structure of the project looks like this:
 │   │   └── filter        <- Seperates the meassurement into csv files
 │   │   └── make_dataset  <- Runs filter->normalize->process as one script
 │   │   └── normalize     <- Normalizes the filtered data
-│   │   └── process       <- Changes normalized data into torch files and concatenated csv 
+│   │   └── process       <- Changes normalized data into torch files and concatenated csv
 │   │   └── README        <- Includes more details about the scripts
 │   │   └── utils         <- File with custom functions
 │   ├── models            <- Model implementations, training script and prediction script
@@ -230,7 +246,7 @@ The directory structure of the project looks like this:
 │   │   └── arch_train_m  <- Old model using Forecasting and TemporalFusionTransformer
 │   │   └── model         <- New lightweight model class definition and function calls
 │   │   └── predict_model <- Predicts the result from unseen data
-│   │   └── train_model   <- New lightweight model using Lightning's LTSM 
+│   │   └── train_model   <- New lightweight model using Lightning's LTSM
 ├── tests                 <- Contains all pytest for Github workflow
 │   └── test_data         <- Checks if data exist and the data shape
 │   ├── test_model        <- Check if the trained model is correct
