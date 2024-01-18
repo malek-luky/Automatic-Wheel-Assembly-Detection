@@ -21,7 +21,9 @@ WANDB_DEFINED = False
 WANDB_PROJECT = None
 WANDB_ENTITY = None
 SWEEP_DEFINED = False
+
 WANDB_API_KEY = None
+
 
 
 # Load dataset (call script from root directory -> python src/models/train_model.py)
@@ -148,10 +150,12 @@ def train_routine(config=None) -> None:
 @click.option("--sweep", is_flag=True, default=False, help="Use to sweep hyperparameters.")
 @click.option("--sweep_iter", default=5, help="Number of iterations for hyperparameters sweeping.")
 @click.option(
+
     "--wandb_off",
     is_flag=True,
     default=True,
     help="Use to run locally without connceting to Wandb service. Automatically set to False",
+
 )
 @click.option(
     "--wandb_project",
@@ -160,14 +164,17 @@ def train_routine(config=None) -> None:
 )
 @click.option("--wandb_entity", default="02476mlops", help='Your wandb entity name. Default is "02476mlops"')
 def parse_input(
+
     train: bool, sweep: bool, sweep_iter: int, wandb_off: bool, wandb_project: str, wandb_entity: str
 ) -> None:
     global WANDB_PROJECT, WANDB_ENTITY, WANDB_DEFINED, WANDB_API_KEY
     WANDB_DEFINED = wandb_off
+
     WANDB_PROJECT = wandb_project
     WANDB_ENTITY = wandb_entity
 
     logger.info("Starting training routine...")
+
     if WANDB_DEFINED:
         WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
         # Set the environment variable
@@ -179,6 +186,7 @@ def parse_input(
 
         logger.info("Sweep is set to " + str(sweep))
         logger.info("Sweep iterations is set to " + str(sweep_iter))
+
 
     if sweep:
         print("Sweeping hyperparameters with", sweep_iter, "iteration(s).")
