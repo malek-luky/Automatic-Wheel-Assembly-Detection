@@ -1,4 +1,4 @@
-name: Build and Deploy our model to Cloud Run
+name: DEPLOY MODEL <> Build and Deploy our model to Cloud Run
 
 env:
     IMAGE_NAME: served_model
@@ -14,6 +14,7 @@ on:
 
 jobs:
     build-and-deploy-model:
+        name: Deploy Model Workflow
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository

@@ -1,4 +1,4 @@
-name: Build, Push Docker Training Image and Run Vertex AI Job
+name: TRAIN MODEL <> Build, Push Docker Training Image and Run Vertex AI Job
 
 env:
     IMAGE_NAME: train_model
@@ -13,6 +13,7 @@ on:
             - main
 jobs:
     train-build-and-push:
+        name: Train Model Workflow
         runs-on: ubuntu-latest
 
         steps:

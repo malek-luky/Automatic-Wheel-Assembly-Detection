@@ -1,4 +1,4 @@
-name: Build and Push Docker Conda Image to GCP Artifact Registry
+name: CONDA IMAGE <> Build and Push Docker to GCP Artifact Registry
 
 env:
     IMAGE_NAME: conda_setup
@@ -9,6 +9,7 @@ on:
             - main
 jobs:
     conda-build-and-push:
+        name: Conda Model Workflow
         runs-on: ubuntu-latest
 
         steps:
