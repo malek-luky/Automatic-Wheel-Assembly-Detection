@@ -28,4 +28,4 @@ functions-framework==3.5.0
 fastapi==0.109.0
 uvicorn==0.26.0
 fastapi-restful[all]
-pip install pytest-cov
+pytest-cov==4.1.0
