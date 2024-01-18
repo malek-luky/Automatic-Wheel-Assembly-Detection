@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import os
+
 import argparse
+import os
 
-import torch
 import pandas as pd
-
+import torch
 # Local imports
 from utils import find_git_root_folder
-
 
 """process.py: Load normalized data from .csv files and save them to separate folder as .pt files."""
 

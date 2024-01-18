@@ -1,24 +1,20 @@
 """This is inital version of the training code for the project."""
 import os
-from pathlib import Path
 import pickle
-import torch
-import warnings
-import lightning.pytorch as pl
-from lightning.pytorch.callbacks import EarlyStopping, LearningRateMonitor
-from lightning.pytorch.loggers import TensorBoardLogger
-from lightning.pytorch.tuner import Tuner
-import numpy as np
-import pandas as pd
-from pytorch_forecasting import GroupNormalizer, TemporalFusionTransformer, TimeSeriesDataSet
-from pytorch_forecasting.data.examples import get_stallion_data
-from pytorch_forecasting.metrics import MAE, RMSE, SMAPE, PoissonLoss, QuantileLoss
-from pytorch_forecasting.models.temporal_fusion_transformer.tuning import optimize_hyperparameters
-from pytorch_forecasting.utils import profile
 
 # Suppress warnings
 import warnings
+
+import lightning.pytorch as pl
+import pandas as pd
+from lightning.pytorch.callbacks import EarlyStopping, LearningRateMonitor
+from lightning.pytorch.loggers import TensorBoardLogger
+from lightning.pytorch.tuner import Tuner
 from pandas.errors import SettingWithCopyWarning
+from pytorch_forecasting import TemporalFusionTransformer, TimeSeriesDataSet
+from pytorch_forecasting.metrics import QuantileLoss
+from pytorch_forecasting.models.temporal_fusion_transformer.tuning import optimize_hyperparameters
+from pytorch_forecasting.utils import profile
 
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
@@ -28,17 +24,17 @@ data = pd.read_csv(file_path)
 data["time_idx"] = data["Time"]
 
 # Define training parameters
-training_cutoff = data["time_idx"].max() - 0 # we may not want to cut off the training data
-max_encoder_length = 1500 # how long the max encoder sequence should be
-max_prediction_length = 1 # should be 1 since we are predictiong bool value
-data['LABEL'] = data['LABEL'].astype(str) # convert to srting
+training_cutoff = data["time_idx"].max() - 0  # we may not want to cut off the training data
+max_encoder_length = 1500  # how long the max encoder sequence should be
+max_prediction_length = 1  # should be 1 since we are predictiong bool value
+data["LABEL"] = data["LABEL"].astype(str)  # convert to srting
 
 # Create TimeSeriesDataSet
 training = TimeSeriesDataSet(
     data[lambda x: x.time_idx <= training_cutoff],
     time_idx="time_idx",
-    target="LABEL", # True or False
-    group_ids=["#Identifier"], # column name of the identifier sequence id need to exclude 0
+    target="LABEL",  # True or False
+    group_ids=["#Identifier"],  # column name of the identifier sequence id need to exclude 0
     min_encoder_length=10,
     max_encoder_length=max_encoder_length,
     min_prediction_length=1,
@@ -47,14 +43,16 @@ training = TimeSeriesDataSet(
     static_reals=[],
     time_varying_known_categoricals=[],
     variable_groups={},  # group of categorical variables can be treated as one variable
-    time_varying_known_reals=["time_idx", 
-                            "TcpInWcs_z_Position",
-                            "FT_Data_Force_X",
-                            "FT_Data_Force_Y",
-                            "FT_Data_Force_Z",
-                            "FT_Data_Torque_X",
-                            "FT_Data_Torque_Y",
-                            "FT_Data_Torque_Z",],
+    time_varying_known_reals=[
+        "time_idx",
+        "TcpInWcs_z_Position",
+        "FT_Data_Force_X",
+        "FT_Data_Force_Y",
+        "FT_Data_Force_Z",
+        "FT_Data_Torque_X",
+        "FT_Data_Torque_Y",
+        "FT_Data_Torque_Z",
+    ],
     time_varying_unknown_categoricals=["LABEL"],
     time_varying_unknown_reals=[],
     add_relative_time_idx=True,
@@ -71,7 +69,7 @@ val_dataloader = validation.to_dataloader(train=False, batch_size=batch_size, nu
 
 # save datasets
 save_data = True
-if (save_data):
+if save_data:
     training.save("training.pkl")
     validation.save("validation.pkl")
 
@@ -130,7 +128,7 @@ trainer.fit(
 
 # make a prediction on entire validation set
 # preds, index = tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
-preds= tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
+preds = tft.predict(val_dataloader, return_index=True, fast_dev_run=True)
 
 
 # Optimize hyperparameters
