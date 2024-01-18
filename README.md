@@ -159,6 +159,11 @@ python src/data/make_dataset.py
 python src/models/train_model.py
 ```
 
+### Run training locally without W&B
+```
+python src/models/train_model.py --wandb_off
+```
+
 ### Remove the conda environment
 
 ```
@@ -195,6 +200,10 @@ curl -X 'POST' \
     ]
 }'
 ```
+
+## Local deployment
+
+Our model can also be deployed locally. The guidlines for running a local server and making predictions are [here](torchserve/README.md)
 
 ## 🤝 Contributing
 
