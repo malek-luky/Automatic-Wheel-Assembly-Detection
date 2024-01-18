@@ -230,7 +230,7 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 -   Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 
 ## DIAGRAM
-[Diagram](reports/figures/diagram.png)
+![Diagram](reports/figures/diagram.png)
 
 ## 📂 PROJECT STRUCTURE
 
