@@ -10,8 +10,8 @@ from fastapi_restful.tasks import repeat_every
 from omegaconf import OmegaConf
 from pydantic import BaseModel
 
-from src.models.model import TireAssemblyLSTM
 from src.helper.gcp_utils import get_secret
+from src.models.model import TireAssemblyLSTM
 
 from src.helper.logger import logger
 

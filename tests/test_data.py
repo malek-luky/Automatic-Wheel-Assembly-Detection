@@ -7,7 +7,7 @@ _PROJECT_ROOT = os.path.dirname(_TEST_ROOT)  # root of project
 _PATH_DATA = os.path.join(_PROJECT_ROOT, "data")  # root of data
 
 # Get the absolute path to the data directory
-data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 
 
 def test_folder_path_exists():
@@ -33,4 +33,4 @@ def test_folder_contents():
     # Check its dimensions
     assert (
         item.size()[1] == 10
-    ), "The item does not have the expected dimensions, should include ten columns, but it does not match"
+    ), "The item does not have the expected dimensions, should include 10 columns, but it does not match"

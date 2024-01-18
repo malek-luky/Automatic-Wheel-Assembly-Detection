@@ -10,8 +10,6 @@ HIDDEN_LAYER_SIZE = 50
 OUTPUT_SIZE = 1
 model = TireAssemblyLSTM(INPUT_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_SIZE)
 
-
-# Entry point function for the custom handler. This shiuld be enough if we only want to
 # Entry point function for the custom handler. This shiuld be enough if we only want to
 # get predictions by calling  'curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T '
 
@@ -47,7 +45,6 @@ def handle(data, context):
         model.eval()
 
     # infer and return result
-    # infer and return result
     else:
         # process input data
         data = convert_bytearray_to_tensor(data)
@@ -56,8 +53,6 @@ def handle(data, context):
         logits = model(data)
 
         # Convert logits to probabilities
-        prediction_probability = torch.sigmoid(logits)
-
         prediction_probability = torch.sigmoid(logits)
 
         # return prediction as dictionary
