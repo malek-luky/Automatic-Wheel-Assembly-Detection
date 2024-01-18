@@ -1,6 +1,6 @@
+import pytorch_lightning as pl
 import torch
 import torch.nn as nn
-import pytorch_lightning as pl
 
 
 class TireAssemblyLSTM(pl.LightningModule):
@@ -34,8 +34,8 @@ class TireAssemblyLSTM(pl.LightningModule):
         y_pred = torch.sigmoid(y_pred)
         accuracy = (y == (y_pred > 0.5)).float().mean()
 
-        self.log('train_loss', loss)
-        self.log('train_accuracy', accuracy)
+        self.log("train_loss", loss)
+        self.log("train_accuracy", accuracy)
         return loss
 
     def test_step(self, batch, batch_idx):
@@ -46,9 +46,9 @@ class TireAssemblyLSTM(pl.LightningModule):
         y_pred = torch.sigmoid(y_pred)
         accuracy = (y == (y_pred > 0.5)).float().mean()
 
-        self.log('test_loss', loss)
-        self.log('test_accuracy', accuracy)
-        return {'test_loss': loss}
+        self.log("test_loss", loss)
+        self.log("test_accuracy", accuracy)
+        return {"test_loss": loss}
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=0.001)
