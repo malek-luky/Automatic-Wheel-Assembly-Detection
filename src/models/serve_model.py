@@ -1,23 +1,21 @@
 import os
 import shutil
+from contextlib import asynccontextmanager
+
 import numpy as np
 import torch
 import wandb
-
 from fastapi import FastAPI, HTTPException
 from fastapi_restful.tasks import repeat_every
-
-
-from pydantic import BaseModel
 from omegaconf import OmegaConf
-from contextlib import asynccontextmanager
+from pydantic import BaseModel
 
-from src.models.model import TireAssemblyLSTM
 from src.helper.gcp_utils import get_secret
+from src.models.model import TireAssemblyLSTM
 
 # Global variables
 
-config = OmegaConf.load('src/models/config/default_config.yaml')
+config = OmegaConf.load("src/models/config/default_config.yaml")
 hparams = config
 
 SEQUENCE_LENGTH = hparams.sequence_length
@@ -25,7 +23,7 @@ INPUT_SIZE = hparams.input_size
 HIDDEN_LAYER_SIZE = hparams.hidden_layer_size
 OUTPUT_SIZE = hparams.output_size
 
-WANDB_API_KEY = get_secret('wheel-assembly-detection', 'WANDB_API_KEY')
+WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
 os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
 # Global dictionary to store the model
@@ -56,7 +54,7 @@ def load_model():
     return model
 
 
-@repeat_every(seconds=60*60*6)  # repeat every 6 hours
+@repeat_every(seconds=60 * 60 * 6)  # repeat every 6 hours
 async def update_model_periodically():
     print("Checking for a new model")
     models["tire_assembly_lstm"] = load_model()
@@ -72,6 +70,7 @@ async def lifespan(app: FastAPI):
 
     # Cleanup, if necessary
     models.clear()
+
 
 app = FastAPI(lifespan=lifespan)
 
@@ -129,6 +128,7 @@ async def predict(request: PredictionRequest):
 
     return {"prediction": label}
 
+
 # healthcheck
 
 
@@ -136,9 +136,12 @@ async def predict(request: PredictionRequest):
 async def healthcheck():
     return {"status": "ok"}
 
+
 # root
 
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the Automatic Wheel Assembly Detection Model API go to /docs or call the /predict endpoint!"}
+    return {
+        "message": "Welcome to the Automatic Wheel Assembly Detection Model API go to /docs or call the /predict endpoint!"
+    }

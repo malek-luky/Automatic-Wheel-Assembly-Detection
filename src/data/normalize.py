@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import os
-import glob
+
 import argparse
+import glob
+import os
 
 import pandas as pd
-
 # Local imports
 from utils import find_git_root_folder
-
 
 """normalize.py: Process filtered .csv files, normalize data and save as torch tensor."""
 
