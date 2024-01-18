@@ -1,28 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-import os
-import glob
+
 import argparse
+import glob
+import os
 
 import pandas as pd
-
 # Local imports
 from utils import find_git_root_folder
-
+from src.helper.logger import logger
 
 """normalize.py: Process filtered .csv files, normalize data and save as torch tensor."""
 
-__author__  = "Vratislav Besta"
-__group__   = "50"
+__author__ = "Vratislav Besta"
+__group__ = "50"
 __version__ = "1.0.1"
-__email__   = "bestavra@fel.cvut.cz"
-__date__    = "2024/01/10" 
+__email__ = "bestavra@fel.cvut.cz"
+__date__ = "2024/01/10"
 
 
 def load_and_normalize_data(file_path: str) -> pd.DataFrame:
     """Load and normalize data from a CSV file.
-    
+
     Parameters
     ----------
     file_path : str
@@ -44,16 +44,17 @@ def load_and_normalize_data(file_path: str) -> pd.DataFrame:
 
     # Re-add the excluded column to its original position
     normalized_df[exclude_column] = excluded_column_data
-    
-    # Replace the "Time" column with an integer sequence starting from 0 for the purpose 
+
+    # Replace the "Time" column with an integer sequence starting from 0 for the purpose
     # of loading the data with pytorch.forecasting.DataTimeSeries
     normalized_df['Time'] = range(len(normalized_df))
     return normalized_df
 
+
 def process_files(
-        src_folder: str, 
-        labels_path: str, 
-        out_folder: str, 
+        src_folder: str,
+        labels_path: str,
+        out_folder: str,
         run_in_git: bool = True) -> list[str]:
     """Normalize all CSV files in a folder.
 
@@ -73,15 +74,16 @@ def process_files(
         The paths to the normalized CSV files.
     """
     # If running in git, set path relative to the root of the repository
+    logger.info(f'Normalize all CSV files in {src_folder}')
     if run_in_git:
         git_root = find_git_root_folder()
         src_folder = os.path.join(git_root, src_folder)
         out_folder = os.path.join(git_root, out_folder)
         labels_path = os.path.join(git_root, labels_path)
-        
+
     # Load the labels data
     labels_df = pd.read_csv(labels_path)
-    
+
     # Create the output directory if it doesn't exist
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
@@ -100,7 +102,7 @@ def process_files(
         matching_files = glob.glob(file_pattern)
 
         if matching_files:
-            
+
             # Assuming the first matching file is the correct one
             file_name = matching_files[0]
 
@@ -124,15 +126,21 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Normalize filtered CSV files.")
 
     # Add the arguments
-    parser.add_argument('filtered_data_path', type=str, nargs='?', default='data/filtered', help='The path to the filtered data')
-    parser.add_argument('labels_data_path', type=str, nargs='?', default='data/FT_dataset_labels.csv', help='The path to the labels data')
-    parser.add_argument('normalized_data_path', type=str, nargs='?', default='data/normalized', help='The path to store the normalized data')
+    parser.add_argument('filtered_data_path', type=str, nargs='?',
+                        default='data/filtered', help='The path to the filtered data')
+    parser.add_argument(
+        'labels_data_path', type=str, nargs='?', default='data/FT_dataset_labels.csv',
+        help='The path to the labels data')
+    parser.add_argument(
+        'normalized_data_path', type=str, nargs='?', default='data/normalized',
+        help='The path to store the normalized data')
 
     # Parse the arguments
     args = parser.parse_args()
 
     # Process the CSV files
     _ = process_files(args.filtered_data_path, args.labels_data_path, args.normalized_data_path)
+
 
 if __name__ == '__main__':
     main()

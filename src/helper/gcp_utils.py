@@ -1,7 +1,8 @@
-from google.cloud import secretmanager
-import pandas as pd
 import io
-from google.cloud import storage
+
+import pandas as pd
+from google.cloud import secretmanager, storage
+from src.helper.logger import logger
 
 
 def load_bucket_data(bucket_name, path_in_bucket):
@@ -12,6 +13,8 @@ def load_bucket_data(bucket_name, path_in_bucket):
     :param path_in_bucket: Path to the file in the bucket.
     :return: Pandas DataFrame.
     """
+    logger.debug(f'Inside src/helper/gcp_utils/load_bucket_data')
+    logger.info(f'Loading data from bucket {bucket_name} at path {path_in_bucket}')
 
     # Initialize a client
     storage_client = storage.Client()
@@ -26,7 +29,7 @@ def load_bucket_data(bucket_name, path_in_bucket):
     data = blob.download_as_bytes()
 
     # Convert bytes to a string buffer and then to a DataFrame
-    return pd.read_csv(io.StringIO(data.decode('utf-8')))
+    return pd.read_csv(io.StringIO(data.decode("utf-8")))
 
 
 def get_secret(project_id, secret_id, version_id="latest"):
@@ -38,6 +41,8 @@ def get_secret(project_id, secret_id, version_id="latest"):
     :param version_id: Version of the secret; defaults to 'latest'.
     :return: The secret as a string.
     """
+    logger.debug(f'Inside src/helper/gcp_utils/get_secret')
+    logger.info(f'Getting secret {secret_id} from project {project_id}')
 
     # Initialize the Secret Manager client
     client = secretmanager.SecretManagerServiceClient()
@@ -49,11 +54,12 @@ def get_secret(project_id, secret_id, version_id="latest"):
     response = client.access_secret_version(request={"name": name})
 
     # Return the secret payload as a string
-    return response.payload.data.decode('UTF-8')
+    return response.payload.data.decode("UTF-8")
 
 
 # Usage
 if __name__ == '__main__':
+    logger.info("Testing GCP utils...")
     data = load_bucket_data('wheel-assembly-detection-dataset', 'data/processed/dataset_concatenated.csv')
     secret = get_secret('wheel-assembly-detection', 'WANDB_API_KEY')
     print(secret)

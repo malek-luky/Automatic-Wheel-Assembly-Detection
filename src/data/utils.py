@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import git
 
-
 """utils.py: Utility functions."""
 
 __author__  = "Vratislav Besta"
