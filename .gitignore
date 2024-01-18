@@ -7,6 +7,10 @@ lightning_logs/
 vertex-sa.json
 serve_model/
 
+# GCP Cloud Functions
+artifacts/
+serve_model/
+
 # Checkpoints
 automatic-wheel-assembly-detection/
 
