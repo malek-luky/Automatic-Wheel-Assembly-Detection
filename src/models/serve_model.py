@@ -13,6 +13,8 @@ from pydantic import BaseModel
 from src.helper.gcp_utils import get_secret
 from src.models.model import TireAssemblyLSTM
 
+from src.helper.logger import logger
+
 # Global variables
 
 config = OmegaConf.load("src/models/config/default_config.yaml")
@@ -31,12 +33,13 @@ models = {}
 
 
 def load_model():
-    print("Loading model from W&B")
+    logger.info("Loading model from W&B")
     wandb.init(project="automatic-wheel-assembly-detection", entity="02476mlops")
     best_model = wandb.use_artifact("02476mlops/automatic-wheel-assembly-detection/mlops_model:latest")
 
     # Clean up the serve_model directory
     if os.path.exists("serve_model/"):
+        logger.debug("Removing existing serve_model directory")
         shutil.rmtree("serve_model/")
     os.makedirs("serve_model/")
 
@@ -45,6 +48,7 @@ def load_model():
     # Find the model name in the directory
     for file in os.listdir("serve_model/"):
         if file.endswith(".pth"):
+            logger.debug(f"Found model {file}")
             model_name = file
             break
 
@@ -56,7 +60,7 @@ def load_model():
 
 @repeat_every(seconds=60 * 60 * 6)  # repeat every 6 hours
 async def update_model_periodically():
-    print("Checking for a new model")
+    logger.info("Checking for a new model")
     models["tire_assembly_lstm"] = load_model()
 
 
@@ -110,6 +114,8 @@ async def predict(request: PredictionRequest):
     Where the value of `prediction` is either 0 or 1.
     """
 
+    logger.info("Making a prediction")
+
     # Convert input data to the appropriate format for your model
     example_sequence = np.array(request.sequence)
 
@@ -126,6 +132,9 @@ async def predict(request: PredictionRequest):
         prediction_probability = torch.sigmoid(logits)  # Convert logits to probabilities
         label = 1 if prediction_probability.item() >= 0.5 else 0
 
+    logger.info(f"Input sequence: {example_sequence}")
+    logger.info(f"Prediction: {label}")
+
     return {"prediction": label}
 
 
@@ -134,6 +143,7 @@ async def predict(request: PredictionRequest):
 
 @app.get("/healthcheck")
 async def healthcheck():
+    logger.info("Healthcheck endpoint called")
     return {"status": "ok"}
 
 
