@@ -21,10 +21,8 @@ WANDB_DEFINED = False
 WANDB_PROJECT = None
 WANDB_ENTITY = None
 SWEEP_DEFINED = False
-WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
+WANDB_API_KEY = None
 
-# Set the environment variable
-os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
 # Load dataset (call script from root directory -> python src/models/train_model.py)
 df = load_bucket_data("wheel-assembly-detection-dataset", "data/processed/dataset_concatenated.csv")
@@ -150,10 +148,10 @@ def train_routine(config=None) -> None:
 @click.option("--sweep", is_flag=True, default=False, help="Use to sweep hyperparameters.")
 @click.option("--sweep_iter", default=5, help="Number of iterations for hyperparameters sweeping.")
 @click.option(
-    "--wandb_on",
+    "--wandb_off",
     is_flag=True,
     default=True,
-    help="Use to connect to Wandb service. Automatically set to True if --sweep is defined. Otherwise False",
+    help="Use to run locally without connceting to Wandb service. Automatically set to False",
 )
 @click.option(
     "--wandb_project",
@@ -162,20 +160,25 @@ def train_routine(config=None) -> None:
 )
 @click.option("--wandb_entity", default="02476mlops", help='Your wandb entity name. Default is "02476mlops"')
 def parse_input(
-    train: bool, sweep: bool, sweep_iter: int, wandb_on: bool, wandb_project: str, wandb_entity: str
+    train: bool, sweep: bool, sweep_iter: int, wandb_off: bool, wandb_project: str, wandb_entity: str
 ) -> None:
-    global WANDB_PROJECT, WANDB_ENTITY, WANDB_DEFINED
-    WANDB_DEFINED = wandb_on
+    global WANDB_PROJECT, WANDB_ENTITY, WANDB_DEFINED, WANDB_API_KEY
+    WANDB_DEFINED = wandb_off
     WANDB_PROJECT = wandb_project
     WANDB_ENTITY = wandb_entity
 
     logger.info("Starting training routine...")
-    logger.info("WANDB is set to " + str(WANDB_DEFINED))
-    logger.info("WANDB project is set to " + WANDB_PROJECT)
-    logger.info("WANDB entity is set to " + WANDB_ENTITY)
+    if WANDB_DEFINED:
+        WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
+        # Set the environment variable
+        os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
-    logger.info("Sweep is set to " + str(sweep))
-    logger.info("Sweep iterations is set to " + str(sweep_iter))
+        logger.info("WANDB is set to " + str(WANDB_DEFINED))
+        logger.info("WANDB project is set to " + WANDB_PROJECT)
+        logger.info("WANDB entity is set to " + WANDB_ENTITY)
+
+        logger.info("Sweep is set to " + str(sweep))
+        logger.info("Sweep iterations is set to " + str(sweep_iter))
 
     if sweep:
         print("Sweeping hyperparameters with", sweep_iter, "iteration(s).")
