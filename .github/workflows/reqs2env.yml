@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    name: Copy Requirements.txt to Environment.yml
+    name: Mirror Requirements.txt to Environment.yml
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
