@@ -12,6 +12,7 @@ serve_model/
 
 # Checkpoints
 automatic-wheel-assembly-detection/
+lightning_logs/
 
 # Garbage from training
 *.lr*
