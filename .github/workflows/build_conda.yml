@@ -37,6 +37,4 @@ jobs:
                   context: .
                   file: dockerfiles/conda_setup.dockerfile
                   tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wheel-assembly-detection-images/${{env.IMAGE_NAME}}:latest
-                  cache-from: type=local,src=/tmp/.buildx-cache
-                  cache-to: type=local,dest=/tmp/.buildx-cache
                   push: true
