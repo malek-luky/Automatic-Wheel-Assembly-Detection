@@ -49,16 +49,13 @@ deploy_model:
 
 ## Create VM Machine
 conda_setup_vm:
-	gcloud compute instances create-with-container instance_makefile --container-image=docker pull europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
-	gcloud compute ssh --zone "europe-west1-b" "conda_setup" --project "wheel-assembly-detection"
+	gcloud compute instances create-with-container conda-setup --container-image=europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
 
-:
-	gcloud compute instances create-with-container instance_makefile --container-image=europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
-	gcloud compute ssh --zone "europe-west1-b" "train_model" --project "wheel-assembly-detection"
+train_model_vm:
+	gcloud compute instances create-with-container train-model --container-image=europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
 
 deploy_model_vm:
-	gcloud compute instances create-with-container instance_makefile --container-image=europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/served_model:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
-	gcloud compute ssh --zone "europe-west1-b" "deploy_model" --project "wheel-assembly-detection"
+	gcloud compute instances create-with-container deploy-model --container-image=europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/served_model:latest --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=50
 
 ## Process raw data into processed data
 data:

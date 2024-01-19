@@ -18,7 +18,6 @@ COPY src ./src
 COPY pyproject.toml .
 
 # If you want to build the image locally, you need to download the service account key and set it as an environment variable 
-
 # COPY vertex-sa.json ./vertex-sa.json
 # ENV GOOGLE_APPLICATION_CREDENTIALS="/app/vertex-sa.json"
 

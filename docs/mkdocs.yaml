@@ -21,3 +21,8 @@ plugins:
 
 nav:
   - Home: index.md
+  - Improvements: improvements.md
+  - List of Commands: commands.md
+  - Docker Notes: docker.md
+  - Project Summary: summary.md
+  - Slack Canva: todo.md

@@ -88,7 +88,7 @@ end of the project.</p>
 <p><em>sXXXXXX, sXXXXXX, sXXXXXX</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>S240446, s212074, s240490, s240505, s233498</p>
+<p>s240446, s212074, s240490, s240505, s233498</p>
 <h3>Question 3</h3>
 <blockquote>
 <p><strong>What framework did you choose to work with and did it help you complete the project?</strong></p>
@@ -166,16 +166,7 @@ The dockerfiles folder contains three docker files with the instruction for buil
 <p>Answer length: 50-100 words.</p>
 <p>Answer:</p>
 </blockquote>
-<p>In our project we established the GitHub Pre-commit to ensure code quality
-and formatting. The pre-commit configuration file prevents the pushing of
-large files to the repository, checks for trailing whitespaces, correctly
-fixes the ends of files, and sorts packages in requirements.txt
-alphabetically. Moreover we utilize ruff to check and auto-format most code
-inconsistencies to conform with the PEP8 standard. Lastly, pre-commit uses
-the isort package to properly organize imports in Python scripts. Ensuring a
-consistent code style and formatting is important in larger projects to
-facilitate code readability and maintainability. It also helps to avoid
-unnecessary merge conflicts when working in a team.</p>
+<p>We established the GitHub Pre-commit to ensure code quality and formatting. The pre-commit configuration file prevents the pushing of large files to the repository, checks for trailing whitespaces, correctly fixes the ends of files, and sorts packages in requirements.txt alphabetically. Moreover we utilize ruff to check and auto-format most code inconsistencies to conform with the PEP8 standard. Lastly, pre-commit uses the isort package to properly organize imports in Python scripts. Ensuring a consistent code style and formatting is important in larger projects to facilitate code readability and maintainability. It also helps to avoid unnecessary merge conflicts inside the team.</p>
 <h2>Version control</h2>
 <blockquote>
 <p>In the following section we are interested in how version control was used in your project during development to
@@ -268,8 +259,8 @@ python src/models/train_model.py --sweep</code></p>
 <em>We made use of config files. Whenever an experiment is run the following happens: ... . To reproduce an experiment</em> &gt; <em>one would have to do ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>To be sure that our results are reproducible, we need two things: exactly same software and ideally also exactly the same hardware. For the software side of view, we are using versioning on GitHub, config files using OmegaConf, dvc for data, and conda for the same python and dependencies versions. This ensures that at any point in the time, we can get exactly the same setup to reproduce the model.</p>
-<p>On the other hand, when it comes to hardware, shipping entire computer is not an easy (and right thing) to do. For that, we are using Docker. Inside the dockerfile, we exactly specify what setup we are using. The packages are described inside the environemnt.yml (since our docker is using conda which can often automatically solve the conflicts between packages). Therefore when we want to reproduce our meassurements. Not only that we have exactly the specs of our computer, but even if we decide to use e.g. different packages, entrypoint or whatever you can change inside the dockerfile, we can just checkout the commmit on git and reproduce the experiment from the past.</p>
+<p>To have reproducible results we need two things:  same software and ideally also exactly the same hardware. For the software side of view, we are using versioning on GitHub, config files using OmegaConf, dvc for data, and conda for the same python and dependencies versions. This ensures that at any point in the time, we can get exactly the same setup to reproduce the model.</p>
+<p>Shipping entire computer is not an easy (and right thing) to do. Inside the dockerfile, we exactly specify what setup we are using. The packages are described inside the environemnt.yml (since our docker is using conda which can often automatically solve the conflicts between packages). Therefore when we want to reproduce our meassurements. Not only that we have exactly the specs of our computer, but even if we decide to use e.g. different packages or entrypoint, we can just checkout the commmit on git and reproduce the experiment from the past.</p>
 <p>Using proper versioning and often commits ensures that no information is lost when running experiments. Additionally, using tools such as Weights &amp; Biases to log training progress and other important metrics/artifacts in your code, helps to keep track of the experiments and their results.</p>
 <h3>Question 14</h3>
 <blockquote>
@@ -405,7 +396,7 @@ curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T example_tensor.txt</c
 <em>Group member 1 used ..., Group member 2 used ..., in total ... credits was spend during development. The service</em> &gt; <em>costing the most was ... due to ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>During the 3 weeks we spent a total of 17 dollars on all the services in the project. The most expensive service ended up being Artifact Registry, which we used to store all our images. Our docker images ended up being quite big and in the beginning we stored <em>all</em> the images with a different tag (commit sha) in case we would want to return to a previous version of that image, this ended up being quite costly. On the other hand, money spent on compute resources was quite low, because of the lack of complexity in our data and model architecture.</p>
+<p>During the 3 weeks we spent a total of 17 dollars on all the services in the project. The most expensive service ended up being Artifact Registry, which we used to store all our images. Our docker images ended up being quite big and in the beginning we stored <em>all</em> the images with a different tag (commit sha) if we needed to return to a previous version of that image, this ended up being quite costly. On the other hand, money spent on compute resources was quite low, because of the lack of complexity in our data and model architecture.</p>
 <h2>Overall discussion of project</h2>
 <blockquote>
 <p>In the following section we would like you to think about the general structure of your project.</p>
@@ -421,7 +412,7 @@ curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T example_tensor.txt</c
 <p>The diagram is something we are really proud of. To make it easy to understand, we seperated the diagram into three different parts.</p>
 <p>The first one is the data analyst. In our case, we got the labelled meassurement by the lab, we had to store them on GCP bucket and version them via DVC. Also, we put into this part the monioring. Since the data can be sensitive to data drifting or bugs resulting in much worse performance, we need to analyze the data over time. To automate this process and immediatelly alert us when something goes wrong, we experimented with Slack and SMS notification.</p>
 <p>The next part is the user, which is fairly simple. Via a command line and firendly user interface, they run the server using cloud run, that run the dockerfile from artifact registry, that downloads the newest model from Wandb model registry and makes the prediction, which is sent back to the user.</p>
-<p>The developer's task is the most complicated. After writing new changes and pushing to github and making PR, Github Actions trigger three important workflows. First one runs the pytets and uplods the coverage report to the PR as a comment, the training one build the docker image (using conda) and upload them to Artifact registry. From there, Vertex AI pulls the training image to train the model using Pytorch Lightning and when the training is finished, uploads the model to wandb. The other deploy the model, which means that it builds the image and uploads it to artifact registry, then the cloud run is triggered, which pulls the image that starts the server. </p>
+<p>The developer's task is the most complicated. After writing new changes and pushing to github and making PR, Github Actions trigger three important workflows. First one runs the pytets and uplods the coverage report to the PR as a comment, the training one build the docker image (using conda) and upload them to Artifact registry. From there, Vertex AI pulls the training image to train the model using Pytorch Lightning and when the training is finished, uploads the model to wandb. The other deploy the model, which means that it builds the image and uploads it to artifact registry, then the cloud run is triggered, which pulls the image that starts the server. If that fails the GitHub workflow will result in an error.</p>
 <p><img alt="diagram" src="figures/diagram.png" /></p>
 <h3>Question 26</h3>
 <blockquote>
@@ -433,6 +424,7 @@ curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T example_tensor.txt</c
 </blockquote>
 <p>The first challenge we encountered was creating a custom architecture for our model, as our study case was quite unique. Our first approach was to implement the model with <code>TemporalFusionTransformer</code> using Pytorch Forecasting, but this didn’t bring positive results, so we switched to pure Pytorch instead.</p>
 <p>The next struggle was building the docker image inside GCP. It got stuck and after discussing the problem with Nicki we decided to buidl the image using github actions and then upload the built image to GCP.</p>
+<p>We were also struggling to cache our images in github workflow. We tried four different approaches how to cache our data to make the workflow faster in the next run, but none if it worked. It only took a lot of space on GitHub while not improving the speed of Github Actinos at all.</p>
 <p>Another big issue we encountered was while running the train_model docker image. Accidentally the entry point was a wrong function that was used in conda_setup dockerfile, which had only one job, never exit the docker container. After spending nearly one day debugging the issue why the dockerfile does not work, we found this bug.</p>
 <p>The biggest struggle was with VM machines. Since the image is quite big, we were incrementally increasing the disk size for our VM. Unfortunately, except the disk size we were facing an issue with wandb-api token. Therefore we added the wandb token to the instance, and afer running into with a disk size we created a new more powerful instance. But we did not save the wanndb-api-token. Therefore we were debugging the disk size for 6 hours and all possible problems, but the issue was elsewhere.</p>
 <p>Last but not least. we had a fun issue with GitHub workflow, where we wanted to automatically mirror the requirements into environment for conda, so we do not have to add each requirements to both files. But the workflow must commit using GitHub bot, which is not allowed to push to protected branches. But if we push to the current branch, we would loop the workflow that is executed during the commit. We solved it using precommit.</p>
@@ -446,15 +438,18 @@ curl http://127.0.0.1:8080/predictions/TireAssemblyLSTM -T example_tensor.txt</c
 </blockquote>
 <ul>
 <li>
-<p>Student s240446 (Liza) provided dataset, contributed to unit tests, wandb setup and sweeping, CLI, config files, report filing, implemented local deployment with torchserve.</p>
+<p>Liza (s240446) provided dataset, contributed to unit tests, wandb setup and sweeping, CLI, config files, report filing, implemented local deployment with torchserve.</p>
 </li>
 <li>
-<p>Student s240490 (Vratislav) implementation of the data processing pipeline, pre-commit setup, documentation, report filling</p>
+<p>Vratislav (s240490) implementation of the data processing pipeline, pre-commit setup, documentation, report filling</p>
 </li>
 <li>
-<p>Student s233498 (Lukas R.) created model architecture and training script, implemented cloud deployment of our trained model (fastapi, dockerfile, github action, cloud setup) to Cloud Run, implemented automatic model training (dockerfile, github actions, cloud setup) to Vertex AI, set up dvc for the repository and configured it with Cloud Storage, set up Weights ad Biases project (store API key in Secret Manager to ensure all our services that train &amp; access our trained models can use our wandb project), created a logging module, report filling</p>
+<p>Lukas R. (s233498) created model architecture and training script, implemented cloud deployment of our trained model (fastapi, dockerfile, github action, cloud setup) to Cloud Run, implemented automatic model training (dockerfile, github actions, cloud setup) to Vertex AI, set up dvc for the repository and configured it with Cloud Storage, set up Weights ad Biases project (store API key in Secret Manager to ensure all our services that train &amp; access our trained models can use our wandb project), created a logging module, report filling</p>
 </li>
 <li>
-<p>Student s212074 (Lukas) created the intiial template using cookiecutter, was responsible for organizing code on GitHub and the team, made the unittests for data and pytests workflow, automated coverage report commenents on PR, created Makefile commands, contributed to README, report and made the project diagram, deployed the MkDocs, ran the dockerfiles on VM, implemented the model upload to wandb together with Slack notification, experimented with GCP Cloud Function, created Monitoring dashbaord and SMS alerts on GCP and tested most of the functionality implemented by Lukas R.</p>
+<p>s212074 (Lukas) created the intiial template using cookiecutter, organized code on GitHub, made the unittests for data and pytests workflow, automated coverage report commenents on PR, created Makefile commands, contributed to README, report and made the project diagram, deployed the MkDocs, ran the dockerfiles on VM, implemented the model upload to wandb together with Slack notification, experimented with GCP Cloud Function, created Monitoring dashbaord and SMS alerts on GCP and tested the functionality implemented by Lukas</p>
+</li>
+<li>
+<p>Weihang (s240505) helped with dataset processing, model implementaion, report filling</p>
 </li>
 </ul>
