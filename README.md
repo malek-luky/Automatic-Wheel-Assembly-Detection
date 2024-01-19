@@ -159,9 +159,9 @@ python src/data/make_dataset.py
 python src/models/train_model.py
 ```
 
-### Run training locally without W&B
+### Run training locally with W&B
 ```
-python src/models/train_model.py --wandb_off
+python src/models/train_model.py --wandb_on
 ```
 
 ### Remove the conda environment
