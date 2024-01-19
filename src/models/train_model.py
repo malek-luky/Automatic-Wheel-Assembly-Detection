@@ -17,7 +17,7 @@ from src.helper.gcp_utils import load_bucket_data, get_secret
 from src.helper.logger import logger
 
 # WANDB SETUP
-WANDB_OFF = True
+WANDB_ON_LOCALLY = False
 WANDB_PROJECT = None
 WANDB_ENTITY = None
 SWEEP_DEFINED = False
@@ -79,7 +79,7 @@ def train_routine(config=None) -> None:
         config = OmegaConf.load("src/models/config/default_config.yaml")
         hparams = config
         # in the only-training mode the connection to Wandb can be disabled
-        if not WANDB_OFF:
+        if WANDB_ON_LOCALLY or "WANDB_API_KEY" in os.environ:
             wandb_logger = WandbLogger(project=WANDB_PROJECT, entity=WANDB_ENTITY)
         else:
             wandb_logger = None
@@ -137,15 +137,16 @@ def train_routine(config=None) -> None:
 
     torch.save(model.state_dict(), f"models/model_{time}.pth")
 
-    # save the model in gcloud storage bucket
-    # create a run and log a model artifact to it
-    logger.info("Saving the model to GCP bucket...")
-    with wandb.init(project="automatic-wheel-assembly-detection") as run:
-        model_artifact = wandb.Artifact(name="mlops_model", type="model")
-        model_artifact.add_file(f"models/model_{time}.pth")
-        run.log_artifact(model_artifact)  # saves the model to wandb artifact registry"
-        run.link_artifact(model_artifact, "model-registry/basic-LTSM")  # links to model as the best model
-        # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
+    if WANDB_ON_LOCALLY or "WANDB_API_KEY" in os.environ:
+        # save the model in gcloud storage bucket
+        # create a run and log a model artifact to it
+        logger.info("Saving the model to GCP bucket...")
+        with wandb.init(project="automatic-wheel-assembly-detection") as run:
+            model_artifact = wandb.Artifact(name="mlops_model", type="model")
+            model_artifact.add_file(f"models/model_{time}.pth")
+            run.log_artifact(model_artifact)  # saves the model to wandb artifact registry"
+            run.link_artifact(model_artifact, "model-registry/basic-LTSM")  # links to model as the best model
+            # TODO: implement the logic of comparing last vs new model and choose the better one and link that one
 
 
 @click.command()
@@ -154,10 +155,10 @@ def train_routine(config=None) -> None:
 @click.option("--sweep_iter", default=5, help="Number of iterations for hyperparameters sweeping.")
 @click.option(
 
-    "--wandb_off",
+    "--wandb_on",
     is_flag=True,
     default=False,
-    help="Use to run locally without connceting to Wandb service. Automatically set to False",
+    help="Use to run locally with connceting to Wandb service. Automatically set to False",
 
 )
 @click.option(
@@ -168,27 +169,33 @@ def train_routine(config=None) -> None:
 @click.option("--wandb_entity", default="02476mlops", help='Your wandb entity name. Default is "02476mlops"')
 def parse_input(
 
-    train: bool, sweep: bool, sweep_iter: int, wandb_off: bool, wandb_project: str, wandb_entity: str
+    train: bool, sweep: bool, sweep_iter: int, wandb_on: bool, wandb_project: str, wandb_entity: str
 ) -> None:
-    global WANDB_PROJECT, WANDB_ENTITY, WANDB_OFF, WANDB_API_KEY
+    global WANDB_PROJECT, WANDB_ENTITY, WANDB_ON_LOCALLY, WANDB_API_KEY
 
-    WANDB_OFF = wandb_off
+    WANDB_ON_LOCALLY = wandb_on
     WANDB_PROJECT = wandb_project
     WANDB_ENTITY = wandb_entity
 
     logger.info("Starting training routine...")
+    
+    if WANDB_ON_LOCALLY:
+        logger.info("Running training locally with wandb")
 
-    if not WANDB_OFF:
-        # if WANDB_API_KEY not in environment variables, get it from GCP Secret Manager
-        if "WANDB_API_KEY" not in os.environ:
-            logger.info("WANDB_API_KEY not found in environment variables. Getting it from GCP Secret Manager...")
+    # if WANDB_API_KEY not in environment variables, get it from GCP Secret Manager
+    if "WANDB_API_KEY" not in os.environ:
+        logger.info("WANDB_API_KEY not found in environment variables. Getting it from GCP Secret Manager...")
+        
+        try:
             WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
             # Set the environment variable
             os.environ["WANDB_API_KEY"] = WANDB_API_KEY
-
-        logger.info("WANDB_OFF " + str(WANDB_OFF))
-        logger.info("WANDB project is set to " + WANDB_PROJECT)
-        logger.info("WANDB entity is set to " + WANDB_ENTITY)
+        
+            logger.info("WANDB project is set to " + WANDB_PROJECT)
+            logger.info("WANDB entity is set to " + WANDB_ENTITY)
+            
+        except:
+            logger.warning("Could not collect WANDB API KEY, because not running on cloud. ")
 
         logger.info("Sweep is set to " + str(sweep))
         logger.info("Sweep iterations is set to " + str(sweep_iter))
