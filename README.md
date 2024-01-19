@@ -73,14 +73,16 @@ The following steps to build and run are written for train_model only, but it ca
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
+<uncomment line 21 and 22 inside dockerfiles/train_model.dockerfile>
 docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
 docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ```
 
 ### Pulls the docker image from GCP Artifact Registry
+There is an error while loading the data from the bucket. Unfortunately, there is no workaround at this moment.
 ```
-make docker_train_online
-docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
+make train_model
+docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/train_model:latest
 ```
 
 
@@ -102,11 +104,10 @@ docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 
 ### Via gcloud command
 
-If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install). Otherwise there are three three dockerfiles that can be deployed to Virtual Machine in GCP. All of the create the same instance but with specific container. The instance of the name is folowing the dockerfile name (conda_setup/train_model/deploy_model)
+If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install). Otherwise there are three three dockerfiles that can be deployed to Virtual Machine in GCP (suffix `_vm` to the dockerfile name`). All of the create the same instance but with specific container. The instance of the name is folowing the dockerfile name (conda_setup/train_model/deploy_model)
 ```
-make conda_setup_vm
 make train_model_vm
-make deploy_model_vm
+gcloud compute ssh --zone "europe-west1-b" "train-model" --project "wheel-assembly-detection"
 ```
 
 ### Connecting to VM machine
