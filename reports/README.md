@@ -586,6 +586,8 @@ The first challenge we encountered was creating a custom architecture for our mo
 
 The next struggle was building the docker image inside GCP. It got stuck and after discussing the problem with Nicki we decided to buidl the image using github actions and then upload the built image to GCP.
 
+We were also struggling to cache our images in github workflow. We tried four different approaches how to cache our data to make the workflow faster in the next run, but none if it worked. It only took a lot of space on GitHub while not improving the speed of Github Actinos at all.
+
 Another big issue we encountered was while running the train_model docker image. Accidentally the entry point was a wrong function that was used in conda_setup dockerfile, which had only one job, never exit the docker container. After spending nearly one day debugging the issue why the dockerfile does not work, we found this bug.
 
 The biggest struggle was with VM machines. Since the image is quite big, we were incrementally increasing the disk size for our VM. Unfortunately, except the disk size we were facing an issue with wandb-api token. Therefore we added the wandb token to the instance, and afer running into with a disk size we created a new more powerful instance. But we did not save the wanndb-api-token. Therefore we were debugging the disk size for 6 hours and all possible problems, but the issue was elsewhere.
@@ -609,4 +611,6 @@ Last but not least. we had a fun issue with GitHub workflow, where we wanted to 
 
 -   Lukas R. (s233498) created model architecture and training script, implemented cloud deployment of our trained model (fastapi, dockerfile, github action, cloud setup) to Cloud Run, implemented automatic model training (dockerfile, github actions, cloud setup) to Vertex AI, set up dvc for the repository and configured it with Cloud Storage, set up Weights ad Biases project (store API key in Secret Manager to ensure all our services that train & access our trained models can use our wandb project), created a logging module, report filling
 
--   Student s212074 (Lukas) created the intiial template using cookiecutter, organized code on GitHub, made the unittests for data and pytests workflow, automated coverage report commenents on PR, created Makefile commands, contributed to README, report and made the project diagram, deployed the MkDocs, ran the dockerfiles on VM, implemented the model upload to wandb together with Slack notification, experimented with GCP Cloud Function, created Monitoring dashbaord and SMS alerts on GCP and tested the functionality implemented by Lukas
+-   s212074 (Lukas) created the intiial template using cookiecutter, organized code on GitHub, made the unittests for data and pytests workflow, automated coverage report commenents on PR, created Makefile commands, contributed to README, report and made the project diagram, deployed the MkDocs, ran the dockerfiles on VM, implemented the model upload to wandb together with Slack notification, experimented with GCP Cloud Function, created Monitoring dashbaord and SMS alerts on GCP and tested the functionality implemented by Lukas
+
+-   Weihang (s240505) helped with dataset processing, model implementaion, report filling
