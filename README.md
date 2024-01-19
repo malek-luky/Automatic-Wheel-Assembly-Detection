@@ -50,11 +50,7 @@ Due to the small dataset limited by the time constraints and the amount of label
 
 As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.
 
-## 🚀 Getting Started
-
-Steps to build the repository in conda or docker
-
-## 🐍 Conda
+## 🐍 Conda Installation
 
 ### Create the environment, install the dependencies and download the data
 
@@ -66,31 +62,31 @@ make conda
 
 ## 🐳 Docker
 
-This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project.
+This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project. We have three different dockerfiles:
+- conda_setup: debugging purposes, sets the environement and waits for user to run it in interactive mode
+- train_model: downloads dependencies, trains model and send it to Weight and Biases (wandb)
+- deploy_model: downloads dependencies and the model from wandb and waits for user input to make predictions
 
-### Build and Run #1
+The following steps to build and run are written for train_model only, but it can be easily changed for any dockerfile.
 
-Build the container locally after downloading the repository. The WANDB_API_KEY is necessary only for train_model dockerfile.
-
+### Build the container locally after downloading the repository. 
 ```
 git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
 cd Automatic-Wheel-Assembly-Detection
-docker build -f dockerfiles/<train_model/conda_setup/deploy_model>.dockerfile . -t trainer:latest
+docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
 docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ```
 
-### Build and Run #2
-
-Pulls the docker image from GCP Artifact Registry, no need to clone the repo. The WANDB_API_KEY is necessary only for docker_train_online
-
+### Pulls the docker image from GCP Artifact Registry
 ```
-make docker_<conda/train/deplot>_online
+make docker_train_online
 docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 ```
+
 
 ## 💻 Google Cloud Computing
 
-### Create VM Machine
+### Create VM Machine in GCP
 
 1. Open [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
 2. Create a name
@@ -104,50 +100,32 @@ docker run --name trainer -e WANDB_API_KEY=<WANDB_API_KEY> trainer:latest
 10. Restart policy: `never`
 11. The rest is default
 
-You can use the following command as well:
+### Via gcloud command
 
+If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install). Otherwise there are three three dockerfiles that can be deployed to Virtual Machine in GCP. All of the create the same instance but with specific container. The instance of the name is folowing the dockerfile name (conda_setup/train_model/deploy_model)
 ```
-gcloud compute instances create-with-container <name_of_instance> --container-image=<ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY> --project=wheel-assembly-detection --zone=europe-west1-b --machine-type=c2d-standard-4 --maintenance-policy=MIGRATE --provisioning-model=STANDARD --container-restart-policy=never --create-disk=auto-delete=yes,size=20 --container-env=WANDB_API_KEY=<YOUR_WANDB_API_KEY> \
+make conda_setup_vm
+make train_model_vm
+make deploy_model_vm
 ```
-
-`ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY` example:
-
-```
-europe-west1-docker.pkg.dev/wheel-assembly-detection/wheel-assembly-detection-images/conda_setup:30bfff9d67e13b398188608b94c44662bca1fb06
-```
-
-### Running Docker inside VM
-
-To run the dockerm you can follow the Build and Run #1 steps above (`gcloud` command is not installed in VM) or you can start the instance with specified docker container following "Create VM Machne"
-
-Another option is to create the instance using image in Artifact Registry
-
-1. Open the image you want to deplot in [GCP](https://console.cloud.google.com/artifacts/docker/wheel-assembly-detection/europe-west1/wheel-assembly-detection-images/conda_setup?project=wheel-assembly-detection)
-2. Click the three dots and click `Deploy in GCE`
-3. Create new instance using the "Create VM Machine" steps
 
 ### Connecting to VM machine
 
 -   Can be via SSH inside the browser [Compute Engine](https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection)
 -   Or locally using command similar to this one `gcloud compute ssh --zone "europe-west1-b" "<name_of_instance>" --project "wheel-assembly-detection"` (the instatnces can be listed using `gcloud compute instances list`)
 
-### How to check if the Docker is deployed in VM?
+### Controlling deployed Virtual Machine
 
--   ssh into the VM
 -   `docker ps`: shows the docker files running on the machine
 -   `docker logs <CONATINER_ID>` wait until its successfully pulled
 -   `docker ps`: pulled container has new ID
 -   `docker exec -it CONTAINER-ID /bin/bash`: starts the docker in interactive window (only the conda_wheel_assemly_detection, the rest only train the model, upload the model and exits, maybe setting the restart policy to "never" should fix this issue)
 
-### Troublshooting
-
-If the `gcloud` command is unkown, [follow the steps for your OS](https://cloud.google.com/sdk/docs/install)
-
 ## 👀 Optional
 
-### Re-process the data
+It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.
 
-It re-creates `filtered`, `normalized` and `processed` folders. The processed data is stored in `data/processed/dataset_concatenated.csv` and is used for training.\*\*
+### Re-process the data
 
 ```
 python src/data/make_dataset.py
@@ -161,11 +139,15 @@ python src/models/train_model.py
 
 ### Run training locally without W&B
 ```
-python src/models/train_model.py --wandb_off
+python src/models/train_model.py
+```
+
+### Run training locally with W&B
+```
+python src/models/train_model.py --wandb_on
 ```
 
 ### Remove the conda environment
-
 ```
 conda remove --name DTU_ML_Ops --all
 ```
@@ -176,7 +158,15 @@ This repository is configured for deployment using Google Cloud️ ☁️. The i
 
 We also automatically re-train the model using **Vertex AI**, store it in **Weights & Biases** model registry and deploy it using Google Cloud Run.
 
+### Automatic Workflows
+With access to GCP you can simply make your changes and merge it into main. When the merge is done, GitHub Actions will automatically train and deploy the model. We have 4 workflows in total.
+- build_conda: build the image and stores in in GCP
+- build_train: runs the built image on Vertex AI to train the model and sends it to wandb 
+- build_deploy: deploy the image to cloud run to handle user requests and via FastAPI gives predictions
+
 ## 🤖 Use our model
+
+### Cloud Deployment
 
 The model is deployed using Google Cloud Run. You can make a prediction using the following command:
 
@@ -201,9 +191,9 @@ curl -X 'POST' \
 }'
 ```
 
-## Local deployment
+### Local deployment
 
-Our model can also be deployed locally. The guidlines for running a local server and making predictions are [here](torchserve/README.md)
+Our model can also be deployed locally. The guidelines for running a local server and making predictions are [here](deployment/torchserve/README.md)
 
 ## 🤝 Contributing
 
@@ -220,14 +210,19 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
     -   Functions / Run: Deployment
     -   Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")
 -   OmegaConf: Handle the config data for train_model.py
+-   CodeCov: Creates the coverage report and submit it as a comments to the pull request 
 -   CookieCutter: Template used for generating code sctructure
 -   DVC: Data versioning tool, similar is github but for data
--   GitHub: Versioning tool for written code, GitHub Actions runs pytest, Codecov, upload built docker images to GCP
+-   GitHub: Versioning tool for written code
+-   GitHub Actions: Run pytest, Codecov and upload built docker images to GCP
 -   Pytest: Runs some tests to check whether the code is working
 -   CodeCov: Tool for uploading coverage report from pytest as a comment to pull requests
 -   Weight and Biases: wandb, used for storing and tracking the trained model
--   Pytorch Lightning: Framework for training our LTSM model and storing default config values (Hydra was not used since the congif files can be stored using Lightning)
+-   Pytorch Lightning: Framework for training our LTSM model and storing default config values
 -   Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
+-   Torchserve: Used for local deployment
+-   FastAPI: Handles the communication between the Cloud Run and stored image/model
+-   Slack/SMS: Handle the alerts, Slack for deployed model, SMS for a server cold-run
 
 ## DIAGRAM
 ![Diagram](reports/figures/diagram.png)
@@ -242,13 +237,15 @@ The directory structure of the project looks like this:
 │   └── build_conda       <- Conda dockerfile: Build conda image and push it to GCP
 │   ├── build_deploy      <- Deploy dockerfile: build, push and deploy
 │   └── build_train       <- Train dockerfile: Build train image and push it to GCP
-│   └── pytest_data       <- Runs the data pytests
-│   ├── pytest_model      <- Runs the model pytests
+│   └── pytests           <- Runs the data and model pytests
 ├── data                  <- Run dvc pull to see this folder
 │   └── filtered          <- Seperated raw data, one file is one meassurement
 │   └── normalized        <- Normalized filtered data
 │   ├── processed         <- Torch sensors from normalized data and concatenated csv
 │   └── raw               <- Original meassurements
+├── deployment            <- Other deployment options as Cloud Function and torchserve
+│   └── cloud_functions   <- File that can be run as a Cloud Function on GCP (WIP)
+│   └── torchserve/       <- All data needed for local deployment
 ├── dockerfiles           <- Storage of out dockerfiles
 │   └── conda_wheel       <- Setups the machine and open interactive environement
 │   ├── train_wheel       <- Runs train_model.py that upload the new model to wandb
@@ -258,7 +255,6 @@ The directory structure of the project looks like this:
 │   ├── index.md          <- Homepage for your documentation
 │   ├── mkdocs.yml        <- Configuration file for mkdocs
 │   └── source/           <- Source directory for documentation files
-├── models                <- Trained and serialized models, model predictions, or model summaries
 ├── reports               <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures/          <- Generated graphics and figures to be used in reporting
 │   └── README            <- Exam questions and project work progress
@@ -270,6 +266,10 @@ The directory structure of the project looks like this:
 │   │   └── process       <- Changes normalized data into torch files and concatenated csv
 │   │   └── README        <- Includes more details about the scripts
 │   │   └── utils         <- File with custom functions
+│   ├── helper            <- Folder with custom functions
+│   │   └── convert_reqs  <- Function that mirrors the requirements to environment.yml
+│   │   └── gcp_utils     <- Function that returns wandb_api on GCP cloud via secret
+│   │   └── logger        <- Creates logs to logs/ folder for easier debugging
 │   ├── models            <- Model implementations, training script and prediction script
 │   │   └── arch_model    <- Old model class definition and function calls
 │   │   └── arch_train_m  <- Old model using Forecasting and TemporalFusionTransformer
@@ -279,14 +279,15 @@ The directory structure of the project looks like this:
 ├── tests                 <- Contains all pytest for Github workflow
 │   └── test_data         <- Checks if data exist and the data shape
 │   ├── test_model        <- Check if the trained model is correct
-└── .gitignore            <- Data that are now pushed to GitHub
-└── data.dvc              <- Links the newest data from GCP Cloud Storage
-└── environment.yml       <- Requirements for new conda env, also used inside docker
-└── LICENSE               <- Open-source license info
+├── .gitignore            <- Data that are now pushed to GitHub
+├── .pre-commit-config    <- Formats the code following pep8 and mirror requirements.txt
+├── LICENSE               <- Open-source license info
 ├── Makefile              <- Makefile with convenience commands like `make data` or `make train`
-├── pyproject.toml        <- Project (python) configuration file
 ├── README.md             <- The top-level README which you are reading right now
-├── requirements.txt      <- The pip requirements file for reproducing the environment
+├── data.dvc              <- Links the newest data from GCP Cloud Storage
+├── environment.yml       <- Requirements for new conda env, also used inside docker
+├── pyproject.toml        <- Project (python) configuration file
+└── requirements.txt      <- The pip requirements file for reproducing the environment
 ```
 
 ## 🙏 Acknowledgements
