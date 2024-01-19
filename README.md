@@ -221,7 +221,7 @@ Contributions are always welcome! If you have any ideas or suggestions for the p
 -   Pytorch Lightning: Framework for training our LTSM model and storing default config values
 -   Forecasting: Abstracion above Pytorch Lightning working with Timeseries data
 -   Torchserve: Used for local deployment
--   FastAPI: Handles the communication between the Cloud Run and stored image/model
+-   FastAPI: Creates API for our model, wrap it into container so it can be accessed anywhere
 -   Slack/SMS: Handle the alerts, Slack for deployed model, SMS for a server cold-run
 
 ## DIAGRAM
