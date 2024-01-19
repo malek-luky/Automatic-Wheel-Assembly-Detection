@@ -1,0 +1,1 @@
+{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"","title":"Home","text":""},{"location":"#documentation","title":"Documentation","text":"<p>Documentation for Wheel_Assembly_Detection</p>"}]}
