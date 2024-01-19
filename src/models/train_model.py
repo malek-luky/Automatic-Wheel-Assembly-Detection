@@ -17,13 +17,12 @@ from src.helper.gcp_utils import load_bucket_data, get_secret
 from src.helper.logger import logger
 
 # WANDB SETUP
-WANDB_DEFINED = False
+WANDB_OFF = True
 WANDB_PROJECT = None
 WANDB_ENTITY = None
 SWEEP_DEFINED = False
 
 WANDB_API_KEY = None
-
 
 
 # Load dataset (call script from root directory -> python src/models/train_model.py)
@@ -80,7 +79,7 @@ def train_routine(config=None) -> None:
         config = OmegaConf.load("src/models/config/default_config.yaml")
         hparams = config
         # in the only-training mode the connection to Wandb can be disabled
-        if WANDB_DEFINED:
+        if not WANDB_OFF:
             wandb_logger = WandbLogger(project=WANDB_PROJECT, entity=WANDB_ENTITY)
         else:
             wandb_logger = None
@@ -132,6 +131,10 @@ def train_routine(config=None) -> None:
     # Save the model
     logger.info("Saving the model locally...")
     time = datetime.now().strftime("%Y%m%d-%H%M%S")
+    # if the folder does not exist, create it
+    if not os.path.exists("models/"):
+        os.makedirs("models/")
+
     torch.save(model.state_dict(), f"models/model_{time}.pth")
 
     # save the model in gcloud storage bucket
@@ -153,7 +156,7 @@ def train_routine(config=None) -> None:
 
     "--wandb_off",
     is_flag=True,
-    default=True,
+    default=False,
     help="Use to run locally without connceting to Wandb service. Automatically set to False",
 
 )
@@ -167,26 +170,28 @@ def parse_input(
 
     train: bool, sweep: bool, sweep_iter: int, wandb_off: bool, wandb_project: str, wandb_entity: str
 ) -> None:
-    global WANDB_PROJECT, WANDB_ENTITY, WANDB_DEFINED, WANDB_API_KEY
-    WANDB_DEFINED = wandb_off
+    global WANDB_PROJECT, WANDB_ENTITY, WANDB_OFF, WANDB_API_KEY
 
+    WANDB_OFF = wandb_off
     WANDB_PROJECT = wandb_project
     WANDB_ENTITY = wandb_entity
 
     logger.info("Starting training routine...")
 
-    if WANDB_DEFINED:
-        WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
-        # Set the environment variable
-        os.environ["WANDB_API_KEY"] = WANDB_API_KEY
+    if not WANDB_OFF:
+        # if WANDB_API_KEY not in environment variables, get it from GCP Secret Manager
+        if "WANDB_API_KEY" not in os.environ:
+            logger.info("WANDB_API_KEY not found in environment variables. Getting it from GCP Secret Manager...")
+            WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
+            # Set the environment variable
+            os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
-        logger.info("WANDB is set to " + str(WANDB_DEFINED))
+        logger.info("WANDB_OFF " + str(WANDB_OFF))
         logger.info("WANDB project is set to " + WANDB_PROJECT)
         logger.info("WANDB entity is set to " + WANDB_ENTITY)
 
         logger.info("Sweep is set to " + str(sweep))
         logger.info("Sweep iterations is set to " + str(sweep_iter))
-
 
     if sweep:
         print("Sweeping hyperparameters with", sweep_iter, "iteration(s).")

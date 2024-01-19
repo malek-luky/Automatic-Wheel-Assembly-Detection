@@ -25,8 +25,11 @@ INPUT_SIZE = hparams.input_size
 HIDDEN_LAYER_SIZE = hparams.hidden_layer_size
 OUTPUT_SIZE = hparams.output_size
 
-WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
-os.environ["WANDB_API_KEY"] = WANDB_API_KEY
+# If WANDB_API_KEY not in environment variables, get it from GCP Secret Manager
+if "WANDB_API_KEY" not in os.environ:
+    logger.info("WANDB_API_KEY not found in environment variables, getting it from GCP Secret Manager")
+    WANDB_API_KEY = get_secret("wheel-assembly-detection", "WANDB_API_KEY")
+    os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
 # Global dictionary to store the model
 models = {}
