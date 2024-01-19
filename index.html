@@ -12,6 +12,8 @@
       
       
       
+        <link rel="next" href="improvements/">
+      
       
       <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
@@ -62,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#documentation" class="md-skip">
+        <a href="#car-wheel-assembly-detection" class="md-skip">
           Skip to content
         </a>
       
@@ -197,6 +199,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -225,6 +229,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -233,9 +239,357 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#tech-stack-tools" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
+      ⚙️ Tech Stack &amp; Tools
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    <span class="md-ellipsis">
+      📝 Project
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 Project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methodology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐍 Conda Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐍 Conda Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-environment-install-the-dependencies-and-download-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the environment, install the dependencies and download the data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐳 Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-the-container-locally-after-downloading-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the container locally after downloading the repository.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulls-the-docker-image-from-gcp-artifact-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pulls the docker image from GCP Artifact Registry
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-cloud-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 Google Cloud Computing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 Google Cloud Computing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-vm-machine-in-gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create VM Machine in GCP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-gcloud-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via gcloud command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-vm-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connecting to VM machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-deployed-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlling deployed Virtual Machine
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      👀 Optional
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👀 Optional">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-process-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-process the data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-train-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-train the model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-training-locally-without-wb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run training locally without W&amp;B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-training-locally-with-wb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run training locally with W&amp;B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-the-conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remove the conda environment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Workflows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-our-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Use our model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤖 Use our model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 Contributing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 Technology Used
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      DIAGRAM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📂 PROJECT STRUCTURE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgements" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙏 Acknowledgements
     </span>
   </a>
   
@@ -245,6 +599,106 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="improvements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Improvements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="todo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slack Canva
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -266,6 +720,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -274,9 +730,357 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#tech-stack-tools" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
+      ⚙️ Tech Stack &amp; Tools
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project" class="md-nav__link">
+    <span class="md-ellipsis">
+      📝 Project
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 Project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methodology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐍 Conda Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐍 Conda Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-environment-install-the-dependencies-and-download-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the environment, install the dependencies and download the data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐳 Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-the-container-locally-after-downloading-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the container locally after downloading the repository.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulls-the-docker-image-from-gcp-artifact-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pulls the docker image from GCP Artifact Registry
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-cloud-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 Google Cloud Computing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 Google Cloud Computing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-vm-machine-in-gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create VM Machine in GCP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-gcloud-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Via gcloud command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-vm-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connecting to VM machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-deployed-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlling deployed Virtual Machine
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      👀 Optional
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👀 Optional">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#re-process-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-process the data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-train-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Re-train the model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-training-locally-without-wb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run training locally without W&amp;B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-training-locally-with-wb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run training locally with W&amp;B
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-the-conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remove the conda environment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Workflows
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-our-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Use our model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤖 Use our model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 Contributing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 Technology Used
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      DIAGRAM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📂 PROJECT STRUCTURE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgements" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙏 Acknowledgements
     </span>
   </a>
   
@@ -297,10 +1101,234 @@
                   
 
 
-  <h1>Home</h1>
-
-<h2 id="documentation">Documentation</h2>
-<p>Documentation for Wheel_Assembly_Detection</p>
+<h1 id="car-wheel-assembly-detection">Car Wheel Assembly Detection 🚘</h1>
+<p><img alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/malek-luky/Automatic-Wheel-Assembly-Detection/main?style=flat" />
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/malek-luky/Automatic-Wheel-Assembly-Detection/.github%2Fworkflows%2Fbuild_conda.yml?branch=main&amp;label=Project%20Image" />
+<img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fdeployed-model-service-t2tcujqlqq-ew.a.run.app%2Fdocs&amp;up_message=online&amp;down_message=offline&amp;style=flat&amp;label=model" /></p>
+<p><strong>Authors</strong>: Elizaveta Isianova, Lukas Malek, Lukas Rasocha, Vratislav Besta, Weihang Li</p>
+<h2 id="tech-stack-tools">⚙️ Tech Stack &amp; Tools</h2>
+<p><img alt="GitHub top language" src="https://img.shields.io/github/languages/top/malek-luky/Automatic-Wheel-Assembly-Detection?style=for-the-badge&amp;logo=python" />
+<img alt="Conda" src="https://img.shields.io/badge/conda-342B029.svg?&amp;style=for-the-badge&amp;logo=anaconda&amp;logoColor=white" />
+<img alt="Gcloud" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&amp;logo=google-cloud&amp;logoColor=white" />
+<img alt="Docker" src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&amp;logo=docker&amp;logoColor=white" />
+<img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&amp;logo=PyTorch&amp;logoColor=white" />
+<img alt="DVC" src="https://img.shields.io/badge/DVC-945DD6?style=for-the-badge&amp;logo=dvc&amp;logoColor=white" />
+<img alt="FastAPI" src="https://img.shields.io/badge/fastapi-109989?style=for-the-badge&amp;logo=FASTAPI&amp;logoColor=white" />
+<img alt="wandb" src="https://img.shields.io/badge/Weights_&amp;_Biases-FFBE00?style=for-the-badge&amp;logo=WeightsAndBiases&amp;logoColor=white" />
+<img alt="lightning" src="https://img.shields.io/badge/Lightning-792DE4?style=for-the-badge&amp;logo=lightning&amp;logoColor=white" /></p>
+<h2 id="project">📝 Project</h2>
+<p>This project presents an attempt to find a solution for predicting the successful assembly of tires onto wheels autonomously. Currently, the method uses purely an image based classification to predict whether the tire was assembled correctly. To enrich this, we attempt to use an LSTM model to analyze inputs from torque and force sensors of the assembling robot, enabling the system to determine the optimal conditions for tire assembly without human intervention. The goal is to increase efficiency and accuracy in tire assembly processes, reducing the reliance on manual labor and minimizing errors.</p>
+<h3 id="motivation">Motivation</h3>
+<p>The project is based on real case situated within the Testbed for Industry 4.0 at CTU Prague. The current quality control methodology uses CNNs for the visual inspection of tire assemblies.</p>
+<h3 id="data">Data</h3>
+<p>Data are meassured and labelled by the lab. The dataset is generated through robotic cell runs, every sample is then labeled as <em>true</em> (successful assembly) or <em>false</em> (unsuccessful assembly).</p>
+<h3 id="project-goal">Project Goal</h3>
+<p>This project aims to introduce a new method for enhancing the quality control process in car wheel assembly executed by a delta robot.</p>
+<h3 id="approach">Approach</h3>
+<p>Departing from the picture-based assessment using CNNs, our approach aims to evaluate the correctness of the assembly based on the data from a force-torque sensor. This transforms the dataset into a collection of time series, capturing recorded sensor data from individual tire assemblies. Each element from the series is a 6D vector combining a 3 DOF force vector and a 3 DOF torque vector.</p>
+<h3 id="methodology">Methodology</h3>
+<p>The chosen methodology is an implementation of Long Short-Term Memory Recurrent Neural Networks (LSTM RNNs) using PyTorch since the data are in timeseries. There is no existing baseline solution for the current problem. Therefore the project could be evaluated and compared to the existing CNN approach.</p>
+<h3 id="limitations">Limitations</h3>
+<p>Due to the small dataset limited by the time constraints and the amount of labelled data, we don't expect to obtain a well performing model, but rather want to present a method for further development.</p>
+<h3 id="framework">Framework</h3>
+<p>As a third-party framework we are going to use PyTorch Lightning and maybe with a Pytorch Forecasting package built on top of the Lightning.</p>
+<h2 id="conda-installation">🐍 Conda Installation</h2>
+<h3 id="create-the-environment-install-the-dependencies-and-download-the-data">Create the environment, install the dependencies and download the data</h3>
+<pre><code>git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
+cd Automatic-Wheel-Assembly-Detection
+make conda
+</code></pre>
+<h2 id="docker">🐳 Docker</h2>
+<p>This will build an image of our project and run it in a container. In the container you will have all the dependencies, data and code needed to run the project. We have three different dockerfiles:
+- conda_setup: debugging purposes, sets the environement and waits for user to run it in interactive mode
+- train_model: downloads dependencies, trains model and send it to Weight and Biases (wandb)
+- deploy_model: downloads dependencies and the model from wandb and waits for user input to make predictions</p>
+<p>The following steps to build and run are written for train_model only, but it can be easily changed for any dockerfile.</p>
+<h3 id="build-the-container-locally-after-downloading-the-repository">Build the container locally after downloading the repository.</h3>
+<pre><code>git clone https://github.com/malek-luky/Automatic-Wheel-Assembly-Detection.git
+cd Automatic-Wheel-Assembly-Detection
+docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
+docker run --name trainer -e WANDB_API_KEY=&lt;WANDB_API_KEY&gt; trainer:latest
+</code></pre>
+<h3 id="pulls-the-docker-image-from-gcp-artifact-registry">Pulls the docker image from GCP Artifact Registry</h3>
+<pre><code>make docker_train_online
+docker run --name trainer -e WANDB_API_KEY=&lt;WANDB_API_KEY&gt; trainer:latest
+</code></pre>
+<h2 id="google-cloud-computing">💻 Google Cloud Computing</h2>
+<h3 id="create-vm-machine-in-gcp">Create VM Machine in GCP</h3>
+<ol>
+<li>Open <a href="https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection">Compute Engine</a></li>
+<li>Create a name</li>
+<li>Region: <code>europe-west1 (Belgium)</code></li>
+<li>Zone: <code>europe-west1-b</code></li>
+<li>Machine configuration: <code>Compute-optimized</code></li>
+<li>Series: <code>C2D</code></li>
+<li>Machine Type: <code>c2d-standard-4</code> (must have at least 16GB RAM)</li>
+<li>Boot disk: <code>20 GB</code></li>
+<li>Container image: <code>&lt;ADDRESS-OF-IMAGE-IN-ARTIFACT-REGISTRY&gt;</code> (click Deploy Container)</li>
+<li>Restart policy: <code>never</code></li>
+<li>The rest is default</li>
+</ol>
+<h3 id="via-gcloud-command">Via gcloud command</h3>
+<p>If the <code>gcloud</code> command is unkown, <a href="https://cloud.google.com/sdk/docs/install">follow the steps for your OS</a>. Otherwise there are three three dockerfiles that can be deployed to Virtual Machine in GCP. All of the create the same instance but with specific container. The instance of the name is folowing the dockerfile name (conda_setup/train_model/deploy_model)</p>
+<pre><code>make conda_setup_vm
+make train_model_vm
+make deploy_model_vm
+</code></pre>
+<h3 id="connecting-to-vm-machine">Connecting to VM machine</h3>
+<ul>
+<li>Can be via SSH inside the browser <a href="https://console.cloud.google.com/compute/instances?project=wheel-assembly-detection">Compute Engine</a></li>
+<li>Or locally using command similar to this one <code>gcloud compute ssh --zone "europe-west1-b" "&lt;name_of_instance&gt;" --project "wheel-assembly-detection"</code> (the instatnces can be listed using <code>gcloud compute instances list</code>)</li>
+</ul>
+<h3 id="controlling-deployed-virtual-machine">Controlling deployed Virtual Machine</h3>
+<ul>
+<li><code>docker ps</code>: shows the docker files running on the machine</li>
+<li><code>docker logs &lt;CONATINER_ID&gt;</code> wait until its successfully pulled</li>
+<li><code>docker ps</code>: pulled container has new ID</li>
+<li><code>docker exec -it CONTAINER-ID /bin/bash</code>: starts the docker in interactive window (only the conda_wheel_assemly_detection, the rest only train the model, upload the model and exits, maybe setting the restart policy to "never" should fix this issue)</li>
+</ul>
+<h2 id="optional">👀 Optional</h2>
+<p>It re-creates <code>filtered</code>, <code>normalized</code> and <code>processed</code> folders. The processed data is stored in <code>data/processed/dataset_concatenated.csv</code> and is used for training.</p>
+<h3 id="re-process-the-data">Re-process the data</h3>
+<pre><code>python src/data/make_dataset.py
+</code></pre>
+<h3 id="re-train-the-model">Re-train the model</h3>
+<pre><code>python src/models/train_model.py
+</code></pre>
+<h3 id="run-training-locally-without-wb">Run training locally without W&amp;B</h3>
+<pre><code>python src/models/train_model.py
+</code></pre>
+<h3 id="run-training-locally-with-wb">Run training locally with W&amp;B</h3>
+<pre><code>python src/models/train_model.py --wandb_on
+</code></pre>
+<h3 id="remove-the-conda-environment">Remove the conda environment</h3>
+<pre><code>conda remove --name DTU_ML_Ops --all
+</code></pre>
+<h2 id="deployment">🌐 Deployment</h2>
+<p>This repository is configured for deployment using Google Cloud️ ☁️. The images in this repository are re-built and deployed automatically using GitHub Actions and stored in Google Artifact Registry on every push to the <code>main</code> branch.</p>
+<p>We also automatically re-train the model using <strong>Vertex AI</strong>, store it in <strong>Weights &amp; Biases</strong> model registry and deploy it using Google Cloud Run.</p>
+<h3 id="automatic-workflows">Automatic Workflows</h3>
+<p>With access to GCP you can simply make your changes and merge it into main. When the merge is done, GitHub Actions will automatically train and deploy the model. We have 4 workflows in total.
+- build_conda: build the image and stores in in GCP
+- build_train: runs the built image on Vertex AI to train the model and sends it to wandb 
+- build_deploy: deploy the image to cloud run to handle user requests and via FastAPI gives predictions</p>
+<h2 id="use-our-model">🤖 Use our model</h2>
+<h3 id="cloud-deployment">Cloud Deployment</h3>
+<p>The model is deployed using Google Cloud Run. You can make a prediction using the following command:</p>
+<pre><code>curl -X 'POST' \
+  'https://deployed-model-service-t2tcujqlqq-ew.a.run.app/predict' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    &quot;sequence&quot;: [
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.2, 0.3, 0.4, 0.3, 0.4, 0.5, 0.3, 0.2],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.1, 0.2, 0.3, 0.2, 0.3, 0.4, 0.2, 0.1],
+        [0.2, 0.3, 0.4, 0.3, 0.4, 0.5, 0.3, 0.2]
+    ]
+}'
+</code></pre>
+<h3 id="local-deployment">Local deployment</h3>
+<p>Our model can also be deployed locally. The guidelines for running a local server and making predictions are <a href="deployment/torchserve/README.md">here</a></p>
+<h2 id="contributing">🤝 Contributing</h2>
+<p>Contributions are always welcome! If you have any ideas or suggestions for the project, please create an issue or submit a pull request. Please follow these <a href="https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716">conventions</a> for commit messages.</p>
+<h2 id="technology-used">💻 Technology Used</h2>
+<ul>
+<li>Docker: "PC Setup" inside the docker file</li>
+<li>Conda: Package manager</li>
+<li>GCP<ul>
+<li>Cloud Storage: Stores data for dvc pull</li>
+<li>Artifact Registry: Stores built docker images (can be created into container)</li>
+<li>Compute Engine: Enables creating virtual machines</li>
+<li>Functions / Run: Deployment</li>
+<li>Vertex AI: includes virtual machines, training of AI models ("abstraction above VM...")</li>
+</ul>
+</li>
+<li>OmegaConf: Handle the config data for train_model.py</li>
+<li>CodeCov: Creates the coverage report and submit it as a comments to the pull request </li>
+<li>CookieCutter: Template used for generating code sctructure</li>
+<li>DVC: Data versioning tool, similar is github but for data</li>
+<li>GitHub: Versioning tool for written code</li>
+<li>GitHub Actions: Run pytest, Codecov and upload built docker images to GCP</li>
+<li>Pytest: Runs some tests to check whether the code is working</li>
+<li>CodeCov: Tool for uploading coverage report from pytest as a comment to pull requests</li>
+<li>Weight and Biases: wandb, used for storing and tracking the trained model</li>
+<li>Pytorch Lightning: Framework for training our LTSM model and storing default config values</li>
+<li>Forecasting: Abstracion above Pytorch Lightning working with Timeseries data</li>
+<li>Torchserve: Used for local deployment</li>
+<li>FastAPI: Creates API for our model, wrap it into container so it can be accessed anywhere</li>
+<li>Slack/SMS: Handle the alerts, Slack for deployed model, SMS for a server cold-run</li>
+</ul>
+<h2 id="diagram">DIAGRAM</h2>
+<p><img alt="Diagram" src="reports/figures/diagram.png" /></p>
+<h2 id="project-structure">📂 PROJECT STRUCTURE</h2>
+<p>The directory structure of the project looks like this:</p>
+<pre><code>├── .dvc/                 &lt;- Cache and config for data version control
+├── .github/workflows     &lt;- Includes the steps for GitHub Actions
+│   └── build_conda       &lt;- Conda dockerfile: Build conda image and push it to GCP
+│   ├── build_deploy      &lt;- Deploy dockerfile: build, push and deploy
+│   └── build_train       &lt;- Train dockerfile: Build train image and push it to GCP
+│   └── pytests           &lt;- Runs the data and model pytests
+├── data                  &lt;- Run dvc pull to see this folder
+│   └── filtered          &lt;- Seperated raw data, one file is one meassurement
+│   └── normalized        &lt;- Normalized filtered data
+│   ├── processed         &lt;- Torch sensors from normalized data and concatenated csv
+│   └── raw               &lt;- Original meassurements
+├── deployment            &lt;- Other deployment options as Cloud Function and torchserve
+│   └── cloud_functions   &lt;- File that can be run as a Cloud Function on GCP (WIP)
+│   └── torchserve/       &lt;- All data needed for local deployment
+├── dockerfiles           &lt;- Storage of out dockerfiles
+│   └── conda_wheel       &lt;- Setups the machine and open interactive environement
+│   ├── train_wheel       &lt;- Runs train_model.py that upload the new model to wandb
+│   └── serve_model       &lt;- Uses FastAPI, as the only dockerfile also deploys the model
+│   └── README            &lt;- Notes and few commands regarding the dockerfiles struggle
+├── docs                  &lt;- Documentation folder
+│   ├── index.md          &lt;- Homepage for your documentation
+│   ├── mkdocs.yml        &lt;- Configuration file for mkdocs
+│   └── source/           &lt;- Source directory for documentation files
+├── reports               &lt;- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures/          &lt;- Generated graphics and figures to be used in reporting
+│   └── README            &lt;- Exam questions and project work progress
+├── src                   &lt;- Source code
+│   ├── data              &lt;- Scripts to download or generate data
+│   │   └── filter        &lt;- Seperates the meassurement into csv files
+│   │   └── make_dataset  &lt;- Runs filter-&gt;normalize-&gt;process as one script
+│   │   └── normalize     &lt;- Normalizes the filtered data
+│   │   └── process       &lt;- Changes normalized data into torch files and concatenated csv
+│   │   └── README        &lt;- Includes more details about the scripts
+│   │   └── utils         &lt;- File with custom functions
+│   ├── helper            &lt;- Folder with custom functions
+│   │   └── convert_reqs  &lt;- Function that mirrors the requirements to environment.yml
+│   │   └── gcp_utils     &lt;- Function that returns wandb_api on GCP cloud via secret
+│   │   └── logger        &lt;- Creates logs to logs/ folder for easier debugging
+│   ├── models            &lt;- Model implementations, training script and prediction script
+│   │   └── arch_model    &lt;- Old model class definition and function calls
+│   │   └── arch_train_m  &lt;- Old model using Forecasting and TemporalFusionTransformer
+│   │   └── model         &lt;- New lightweight model class definition and function calls
+│   │   └── predict_model &lt;- Predicts the result from unseen data
+│   │   └── train_model   &lt;- New lightweight model using Lightning's LTSM
+├── tests                 &lt;- Contains all pytest for Github workflow
+│   └── test_data         &lt;- Checks if data exist and the data shape
+│   ├── test_model        &lt;- Check if the trained model is correct
+├── .gitignore            &lt;- Data that are now pushed to GitHub
+├── .pre-commit-config    &lt;- Formats the code following pep8 and mirror requirements.txt
+├── LICENSE               &lt;- Open-source license info
+├── Makefile              &lt;- Makefile with convenience commands like `make data` or `make train`
+├── README.md             &lt;- The top-level README which you are reading right now
+├── data.dvc              &lt;- Links the newest data from GCP Cloud Storage
+├── environment.yml       &lt;- Requirements for new conda env, also used inside docker
+├── pyproject.toml        &lt;- Project (python) configuration file
+└── requirements.txt      &lt;- The pip requirements file for reproducing the environment
+</code></pre>
+<h2 id="acknowledgements">🙏 Acknowledgements</h2>
+<p>Created using <a href="https://github.com/SkafteNicki/mlops_template">mlops_template</a>,
+a <a href="https://github.com/cookiecutter/cookiecutter">cookiecutter template</a> for getting started with Machine Learning Operations (MLOps).</p>
 
 
 

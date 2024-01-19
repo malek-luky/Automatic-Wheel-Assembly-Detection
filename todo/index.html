@@ -1,0 +1,633 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="DTU">
+      
+      
+      
+        <link rel="prev" href="../summary/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Slack Canva - Wheel_Assembly_Detection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slack-canva" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Wheel_Assembly_Detection" class="md-header__button md-logo" aria-label="Wheel_Assembly_Detection" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wheel_Assembly_Detection
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Slack Canva
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Wheel_Assembly_Detection" class="md-nav__button md-logo" aria-label="Wheel_Assembly_Detection" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Wheel_Assembly_Detection
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../improvements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Improvements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Slack Canva
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Slack Canva
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#week-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#week-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brainstorm" class="md-nav__link">
+    <span class="md-ellipsis">
+      BRAINSTORM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-before-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      CHECK BEFORE SUBMISSION
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unnecessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      UNNECESSARY
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#week-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#week-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#week-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Week 3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brainstorm" class="md-nav__link">
+    <span class="md-ellipsis">
+      BRAINSTORM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-before-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      CHECK BEFORE SUBMISSION
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unnecessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      UNNECESSARY
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="slack-canva">Slack Canva</h1>
+<p>Here we would like to store our Slack Canva that we used for distributing the tasks throughout the course.</p>
+<h2 id="week-1">Week 1</h2>
+<ul>
+<li>[x] Create a git repository (Lukas M.)</li>
+<li>[x] Make sure that all team members have write access to the github repository (Lukas M.)</li>
+<li>[x] Create a dedicated environment for you project to keep track of your packages (Everyone)</li>
+<li>[x] Create the initial file structure using cookiecutter (Lukas M.)</li>
+<li>[x] Fill out the make_dataset.py file such that it downloads whatever data you need and (Vraťa)</li>
+<li>[x] Add a model file and a training script and get that running (Lukas R. +  Liza + Weihang)</li>
+<li>[x] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code (Lukas R. + Weihang)</li>
+<li>[x] Use Weights &amp; Biases to log training progress and other important metrics/artifacts in your code. (Lukas R.)</li>
+<li>[x] Used Hydra to load the configurations and manage your hyperparameters nope, will be replaced by Lightning CLI </li>
+<li>[x] Remember to fill out the requirements.txt file with whatever dependencies that you are using (Lukas M.)</li>
+<li>[x] Setup version control for your data or part of your data (Lukas R.)</li>
+<li>[x] Construct one or multiple docker files for your code (Lukas M.)</li>
+<li>[x] When you have something that works somewhat, remember at some point to to some profiling and see if you can optimize your code</li>
+<li>[x] Build the docker files locally and make sure they work as intended </li>
+</ul>
+<h2 id="week-2">Week 2</h2>
+<ul>
+<li>[x] Write unit tests related to the data part of your code (Lukas M.)</li>
+<li>[x] Update cache command (Lukas M.)</li>
+<li>[x] Write unit tests related to model construction and or model training (the tests should be written into test folder and the workflow into .github/workflow folder) (liza)</li>
+<li>[x] Read the csv from datafolder (Lukas M.)</li>
+<li>[x] Consider running a hyperparameter optimization sweep. (Liza) </li>
+<li>[x] Update the dvc bucket with the new files (Lukas R.)</li>
+<li>[x] path while running <code>python src/data/make_dataset.py</code> is wrong inside conda (works for windows/ubuntu tho, would be nice if someone can double check)</li>
+<li>[x] columns for <code>src/model/train_model.py</code> are not the same as inside data/processed/dataset_concatenated.csv`</li>
+<li>[x] Calculate the coverage.</li>
+<li>[x] Get some continuous integration running on the github repository (Lukas M.)</li>
+<li>[x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup (Lukas R.)</li>
+<li>[x] Create a trigger workflow for automatically building your docker images (Lukas R.)</li>
+<li>[x] Get your model training in GCP using either the Engine or Vertex AI</li>
+<li>[x] Create a FastAPI application that can do inference using your model (Lukas R.)</li>
+<li>[x] If applicable, consider deploying the model locally using torchserve (liza)</li>
+<li>[x] Deploy your model in GCP using either Functions or Run as the backend</li>
+<li>[x] Wandb monitoring  (Lukas R)  https://wandb.ai/02476mlops/automatic-wheel-assembly-detection?workspace=user-lukyrasocha</li>
+<li>[x] Figure out wandb auth stuff so you can also monitor runs when training via docker (Lukas R)</li>
+<li>[x] LOGGING!!!! (Lukas R)</li>
+<li>[x] Save trained model locally (Lukas R.)</li>
+<li>[x] Save trained model in cloud (so that we can access models that were trained in cloud) (Lukas M.)</li>
+<li>[x] Hyperparameters (now they are set in the beginning of the file, try calling the training via the client and not the file itself... Try using Lightning CLI? or hydra? → OmegaConf (Liza)</li>
+<li>[x] Try automatic hyperparameter tuning using optuna/Lighngtning CLI/Forecasting → WandB (Liza)</li>
+</ul>
+<h2 id="week-3">Week 3</h2>
+<ul>
+<li>[x] Create documentation using MkDocs (include there your personal notes or the readme from the docs folder) (Lukas M.)</li>
+<li>[x] Answer the questions that are part of the report</li>
+<li>[x] Setup monitoring for the system telemetry of your deployed model?</li>
+<li>[x] Setup monitoring for the performance of your deployed model?</li>
+</ul>
+<h2 id="brainstorm">BRAINSTORM</h2>
+<ul>
+<li>[x] Do we want so save and load checkpoints as well? (might be good practice for large-scale models)</li>
+<li>[x] Do we want to somehow optimize the parameter tuning (e.g. start already tuning around the best parameters from previous runs maybe?)</li>
+<li>[x] We are uploading and using last trained model, should we use the best model instead?</li>
+<li>[x] Should we have just environment.yaml and remove requirements.txt? To reduce overhead</li>
+</ul>
+<h2 id="check-before-submission">CHECK BEFORE SUBMISSION</h2>
+<ul>
+<li>[x] Remember to comply with good coding practices (pep8) while doing the project</li>
+<li>[x] Do a bit of code typing and remember to document essential parts of your code</li>
+<li>[x] Check whether docker runs correctly if started from scratch</li>
+<li>[x] Save slack canva to README</li>
+<li>[x] Update the fodler structure in README</li>
+<li>[x] Try making new conda environment and fill all missing/wrong requirements</li>
+<li>[x] Add branch protection rules to check all pytest before merging</li>
+<li>[x] Delete useless data from GCP bucket</li>
+<li>[x] Revisit your initial project description. Did the project turn out as you wanted?</li>
+<li>[x] Make sure all group members have a understanding about all parts of the project</li>
+<li>[x] Check if all your code is uploaded to github</li>
+<li>[x] Change default flag train to sweep? (now its only -wandb_on)</li>
+<li>[x] Check Coverage Report (now it does not work)(Lukas M.)</li>
+</ul>
+<h2 id="unnecessary">UNNECESSARY</h2>
+<ul>
+<li>[x] If applicable, play around with distributed data loading</li>
+<li>[x] If applicable, play around with distributed model training</li>
+<li>[x] Check how robust your model is towards data drifting</li>
+<li>[x] Play around with quantization, compilation and pruning for you trained models to increase inference speed</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>
